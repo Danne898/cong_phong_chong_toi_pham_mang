@@ -1,0 +1,2064 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CỔNG THÔNG TIN PHÒNG CHỐNG TỘI PHẠM MẠNG QUỐC GIA</title>
+<link rel="preconnect" href="https://www.creativefabrica.com/product/initial-letter-ca-logo/">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-primary: #050b18;
+    --bg-secondary: #0a1628;
+    --bg-card: #0d1f3c;
+    --bg-card-hover: #112444;
+    --accent-red: #e63946;
+    --accent-red-glow: rgba(230,57,70,0.3);
+    --accent-cyan: #00f5ff;
+    --accent-cyan-glow: rgba(0,245,255,0.2);
+    --accent-gold: #ffd60a;
+    --accent-gold-glow: rgba(255,214,10,0.2);
+    --accent-green: #06d6a0;
+    --accent-orange: #fb8500;
+    --text-primary: #e8f4ff;
+    --text-secondary: #7a9cc4;
+    --text-muted: #3d5a7a;
+    --border: rgba(0,245,255,0.12);
+    --border-hover: rgba(0,245,255,0.35);
+    --gradient-hero: linear-gradient(135deg, #050b18 0%, #0a1628 40%, #0d1f3c 100%);
+  }
+  [data-theme="light"] {
+    --bg-primary: #f0f4f8;
+    --bg-secondary: #e2eaf3;
+    --bg-card: #ffffff;
+    --bg-card-hover: #f7faff;
+    --text-primary: #0a1628;
+    --text-secondary: #3a5a80;
+    --text-muted: #8aabcc;
+    --border: rgba(0,100,200,0.15);
+    --border-hover: rgba(0,100,200,0.4);
+    --gradient-hero: linear-gradient(135deg, #e2eaf3 0%, #ccddef 100%);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Be Vietnam Pro', sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    min-height: 100vh;
+    overflow-x: hidden;
+    transition: background 0.3s, color 0.3s;
+  }
+
+  /* ── ANIMATED BACKGROUND ── */
+  .bg-grid {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background-image:
+      linear-gradient(rgba(0,245,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,245,255,0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+    animation: gridMove 20s linear infinite;
+  }
+  @keyframes gridMove { 0% { transform: translateY(0); } 100% { transform: translateY(50px); } }
+
+  .bg-glow {
+    position: fixed; top: -20%; left: 50%; transform: translateX(-50%);
+    width: 800px; height: 400px;
+    background: radial-gradient(ellipse, rgba(0,245,255,0.06) 0%, transparent 70%);
+    pointer-events: none; z-index: 0;
+  }
+
+  /* ── NAVBAR ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(5,11,24,0.9);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+    height: 64px;
+    display: flex; align-items: center; justify-content: space-between;
+    transition: background 0.3s;
+  }
+  [data-theme="light"] nav { background: rgba(240,244,248,0.92); }
+
+  .nav-brand {
+    display: flex; align-items: center; gap: 12px;
+    text-decoration: none;
+  }
+  .nav-logo {
+    width: 38px; height: 38px;
+    background: linear-gradient(135deg, var(--accent-red), #c1121f);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700; font-size: 16px; color: white;
+    box-shadow: 0 0 20px var(--accent-red-glow);
+    flex-shrink: 0;
+  }
+  .nav-title-main {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700; font-size: 13px; letter-spacing: 0.05em;
+    color: var(--accent-cyan);
+    line-height: 1.2;
+  }
+  .nav-title-sub {
+    font-size: 10px; color: var(--text-secondary);
+    letter-spacing: 0.08em; text-transform: uppercase;
+    line-height: 1.2;
+  }
+
+  .nav-links {
+    display: flex; align-items: center; gap: 6px;
+    list-style: none;
+  }
+  .nav-links a {
+    text-decoration: none; color: var(--text-secondary);
+    font-size: 13px; font-weight: 500;
+    padding: 6px 12px; border-radius: 6px;
+    transition: all 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent-cyan); background: rgba(0,245,255,0.07); }
+  .nav-links a.active { color: var(--accent-cyan); }
+
+  .nav-actions { display: flex; align-items: center; gap: 10px; }
+
+  .btn-emergency {
+    background: linear-gradient(135deg, var(--accent-red), #c1121f);
+    color: white; border: none; border-radius: 8px;
+    padding: 8px 16px; font-size: 12px; font-weight: 700;
+    cursor: pointer; letter-spacing: 0.06em;
+    box-shadow: 0 0 15px var(--accent-red-glow);
+    animation: pulse-red 2s infinite;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    text-transform: uppercase;
+  }
+  @keyframes pulse-red {
+    0%,100% { box-shadow: 0 0 15px var(--accent-red-glow); }
+    50% { box-shadow: 0 0 30px rgba(230,57,70,0.5); }
+  }
+
+  .btn-theme {
+    width: 36px; height: 36px;
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 8px; cursor: pointer; font-size: 16px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+  }
+  .btn-theme:hover { border-color: var(--accent-cyan); }
+
+  /* ── MAIN LAYOUT ── */
+  main { position: relative; z-index: 1; padding-top: 64px; }
+
+  section { padding: 64px 0; }
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 90vh;
+    display: flex; align-items: center;
+    background: var(--gradient-hero);
+    position: relative; overflow: hidden;
+    padding-top: 64px;
+  }
+
+  .hero-content { max-width: 700px; position: relative; z-index: 2; }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(230,57,70,0.1); border: 1px solid rgba(230,57,70,0.3);
+    border-radius: 20px; padding: 6px 14px; margin-bottom: 24px;
+  }
+  .hero-badge .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--accent-red);
+    animation: blink 1.2s infinite;
+  }
+  @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0.2; } }
+  .hero-badge span { font-size: 11px; font-weight: 700; color: var(--accent-red); letter-spacing: 0.1em; text-transform: uppercase; }
+
+  .hero h1 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: clamp(36px, 5vw, 64px);
+    font-weight: 700; line-height: 1.1;
+    margin-bottom: 8px;
+    color: var(--text-primary);
+  }
+  .hero h1 .highlight {
+    color: var(--accent-cyan);
+    text-shadow: 0 0 30px rgba(0,245,255,0.4);
+  }
+  .hero h1 .highlight-red { color: var(--accent-red); }
+
+  .hero-sub {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: clamp(18px, 2.5vw, 28px);
+    color: var(--text-secondary); font-weight: 500;
+    margin-bottom: 20px; letter-spacing: 0.03em;
+  }
+
+  .hero p {
+    font-size: 15px; color: var(--text-secondary);
+    line-height: 1.7; max-width: 560px; margin-bottom: 36px;
+  }
+
+  .hero-buttons { display: flex; gap: 14px; flex-wrap: wrap; }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--accent-cyan), #00b4d8);
+    color: #050b18; border: none; border-radius: 10px;
+    padding: 14px 28px; font-size: 14px; font-weight: 700;
+    cursor: pointer; letter-spacing: 0.05em; text-decoration: none;
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: all 0.25s; font-family: 'Be Vietnam Pro', sans-serif;
+    text-transform: uppercase;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,245,255,0.3); }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--text-primary); border: 1px solid var(--border);
+    border-radius: 10px; padding: 14px 28px; font-size: 14px; font-weight: 600;
+    cursor: pointer; letter-spacing: 0.03em; text-decoration: none;
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: all 0.25s; font-family: 'Be Vietnam Pro', sans-serif;
+  }
+  .btn-outline:hover { border-color: var(--accent-cyan); color: var(--accent-cyan); transform: translateY(-2px); }
+
+  .hero-stats {
+    display: flex; gap: 32px; margin-top: 48px; flex-wrap: wrap;
+  }
+  .stat-item { text-align: center; }
+  .stat-value {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 32px; font-weight: 700;
+    color: var(--accent-cyan);
+    text-shadow: 0 0 20px rgba(0,245,255,0.3);
+    line-height: 1;
+  }
+  .stat-label { font-size: 11px; color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 4px; }
+  .stat-divider { width: 1px; background: var(--border); }
+
+  .hero-visual {
+    position: absolute; right: -80px; top: 50%; transform: translateY(-50%);
+    width: 600px; height: 600px; opacity: 0.15; pointer-events: none;
+  }
+  .hero-ring {
+    position: absolute; border-radius: 50%;
+    border: 1px solid var(--accent-cyan);
+    animation: rotateRing 15s linear infinite;
+  }
+  .hero-ring:nth-child(1) { width: 200px; height: 200px; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+  .hero-ring:nth-child(2) { width: 350px; height: 350px; top: 50%; left: 50%; transform: translate(-50%,-50%); animation-duration: 25s; animation-direction: reverse; border-style: dashed; }
+  .hero-ring:nth-child(3) { width: 500px; height: 500px; top: 50%; left: 50%; transform: translate(-50%,-50%); animation-duration: 40s; opacity: 0.5; }
+  @keyframes rotateRing { from { transform: translate(-50%,-50%) rotate(0deg); } to { transform: translate(-50%,-50%) rotate(360deg); } }
+
+  /* ── ALERT TICKER ── */
+  .alert-ticker {
+    background: rgba(230,57,70,0.08);
+    border-top: 1px solid rgba(230,57,70,0.2);
+    border-bottom: 1px solid rgba(230,57,70,0.2);
+    padding: 10px 0; overflow: hidden;
+    position: relative; z-index: 2;
+  }
+  .ticker-inner {
+    display: flex; align-items: center; gap: 0;
+    white-space: nowrap;
+    animation: tickerScroll 40s linear infinite;
+  }
+  @keyframes tickerScroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+  .ticker-label {
+    background: var(--accent-red); color: white;
+    padding: 2px 12px; font-size: 11px; font-weight: 800;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    margin-right: 16px; border-radius: 3px; flex-shrink: 0;
+    position: sticky; left: 0; z-index: 1;
+  }
+  .ticker-item {
+    color: var(--text-secondary); font-size: 12px; font-weight: 500;
+    padding: 0 24px; border-right: 1px solid rgba(230,57,70,0.2);
+  }
+  .ticker-item .tag { color: var(--accent-red); font-weight: 700; }
+
+  /* ── SECTION HEADERS ── */
+  .section-header { margin-bottom: 48px; }
+  .section-label {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--accent-cyan);
+    margin-bottom: 12px;
+  }
+  .section-label::before {
+    content: ''; width: 24px; height: 2px;
+    background: var(--accent-cyan);
+  }
+  .section-title {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: clamp(28px, 4vw, 42px);
+    font-weight: 700; line-height: 1.2;
+    color: var(--text-primary);
+  }
+  .section-desc { font-size: 15px; color: var(--text-secondary); line-height: 1.7; max-width: 560px; margin-top: 12px; }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px; padding: 28px;
+    transition: all 0.3s;
+    position: relative; overflow: hidden;
+  }
+  .card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent-cyan), transparent);
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .card:hover {
+    border-color: var(--border-hover);
+    background: var(--bg-card-hover);
+    transform: translateY(-4px);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  }
+  .card:hover::before { opacity: 1; }
+
+  .card-icon {
+    width: 52px; height: 52px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px; margin-bottom: 18px;
+  }
+  .icon-red { background: rgba(230,57,70,0.12); }
+  .icon-cyan { background: rgba(0,245,255,0.1); }
+  .icon-gold { background: rgba(255,214,10,0.1); }
+  .icon-green { background: rgba(6,214,160,0.1); }
+  .icon-orange { background: rgba(251,133,0,0.1); }
+
+  .card h3 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 20px; font-weight: 700;
+    color: var(--text-primary); margin-bottom: 10px;
+  }
+  .card p { font-size: 14px; color: var(--text-secondary); line-height: 1.65; }
+
+  .card-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 13px; font-weight: 600; color: var(--accent-cyan);
+    text-decoration: none; margin-top: 18px;
+    transition: gap 0.2s;
+  }
+  .card-link:hover { gap: 10px; }
+
+  /* ── FEATURE GRID ── */
+  .features-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+  }
+
+  /* ── ALERT SECTION ── */
+  .alerts-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+  }
+  @media (max-width: 768px) { .alerts-grid { grid-template-columns: 1fr; } }
+
+  .alert-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px; padding: 20px;
+    display: flex; gap: 16px; align-items: flex-start;
+    transition: all 0.25s;
+  }
+  .alert-card:hover { border-color: var(--border-hover); transform: translateX(4px); }
+
+  .alert-severity {
+    padding: 4px 10px; border-radius: 5px; font-size: 10px;
+    font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase;
+    flex-shrink: 0; margin-top: 2px;
+  }
+  .sev-critical { background: rgba(230,57,70,0.15); color: var(--accent-red); border: 1px solid rgba(230,57,70,0.3); }
+  .sev-high { background: rgba(251,133,0,0.12); color: var(--accent-orange); border: 1px solid rgba(251,133,0,0.25); }
+  .sev-medium { background: rgba(255,214,10,0.1); color: var(--accent-gold); border: 1px solid rgba(255,214,10,0.2); }
+
+  .alert-content h4 { font-size: 15px; font-weight: 700; color: var(--text-primary); margin-bottom: 6px; }
+  .alert-content p { font-size: 13px; color: var(--text-secondary); line-height: 1.55; }
+  .alert-meta { font-size: 11px; color: var(--text-muted); margin-top: 8px; display: flex; gap: 12px; }
+
+  /* ── SEARCH BOX ── */
+  .search-section {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border); border-radius: 20px;
+    padding: 36px; margin-bottom: 40px;
+  }
+  .search-section h3 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 22px; font-weight: 700; margin-bottom: 6px; color: var(--text-primary);
+  }
+  .search-section p { font-size: 13px; color: var(--text-secondary); margin-bottom: 20px; }
+  .search-bar {
+    display: flex; gap: 12px;
+  }
+  .search-bar input {
+    flex: 1; background: var(--bg-card);
+    border: 1px solid var(--border); border-radius: 10px;
+    padding: 12px 18px; font-size: 14px; color: var(--text-primary);
+    outline: none; font-family: 'Be Vietnam Pro', sans-serif;
+    transition: border-color 0.2s;
+  }
+  .search-bar input:focus { border-color: var(--accent-cyan); box-shadow: 0 0 0 3px rgba(0,245,255,0.1); }
+  .search-bar input::placeholder { color: var(--text-muted); }
+  .btn-search {
+    background: var(--accent-cyan); color: #050b18;
+    border: none; border-radius: 10px; padding: 12px 24px;
+    font-size: 14px; font-weight: 700; cursor: pointer;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .btn-search:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(0,245,255,0.25); }
+
+  /* ── EMERGENCY SECTION ── */
+  .emergency-section {
+    background: linear-gradient(135deg, rgba(230,57,70,0.08), rgba(193,18,31,0.05));
+    border: 1px solid rgba(230,57,70,0.2);
+    border-radius: 20px; padding: 40px;
+    position: relative; overflow: hidden;
+  }
+  .emergency-section::before {
+    content: '🚨'; position: absolute; right: 40px; top: 50%; transform: translateY(-50%);
+    font-size: 100px; opacity: 0.06;
+  }
+
+  .emergency-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-top: 28px; }
+
+  .emergency-step {
+    background: var(--bg-card); border: 1px solid rgba(230,57,70,0.15);
+    border-radius: 12px; padding: 20px;
+    display: flex; gap: 16px; align-items: flex-start;
+    transition: all 0.25s;
+  }
+  .emergency-step:hover { border-color: rgba(230,57,70,0.3); transform: translateY(-2px); }
+
+  .step-num {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent-red), #c1121f);
+    color: white; font-weight: 800; font-size: 16px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; font-family: 'Rajdhani', sans-serif;
+    box-shadow: 0 0 15px var(--accent-red-glow);
+  }
+  .emergency-step h4 { font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 6px; }
+  .emergency-step p { font-size: 13px; color: var(--text-secondary); line-height: 1.55; }
+
+  /* ── REPORT FORM ── */
+  .report-form {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 20px; padding: 36px;
+  }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  @media (max-width: 640px) { .form-grid { grid-template-columns: 1fr; } }
+
+  .form-group { display: flex; flex-direction: column; gap: 8px; }
+  .form-group.full-width { grid-column: 1 / -1; }
+  .form-group label { font-size: 13px; font-weight: 600; color: var(--text-secondary); letter-spacing: 0.03em; }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    background: var(--bg-secondary); border: 1px solid var(--border);
+    border-radius: 10px; padding: 12px 16px;
+    font-size: 14px; color: var(--text-primary);
+    outline: none; font-family: 'Be Vietnam Pro', sans-serif;
+    transition: border-color 0.2s;
+  }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    border-color: var(--accent-cyan);
+    box-shadow: 0 0 0 3px rgba(0,245,255,0.1);
+  }
+  .form-group select option { background: var(--bg-card); }
+  .form-group textarea { resize: vertical; min-height: 100px; }
+
+  .upload-zone {
+    border: 2px dashed var(--border); border-radius: 10px;
+    padding: 28px; text-align: center; cursor: pointer;
+    transition: all 0.25s;
+  }
+  .upload-zone:hover { border-color: var(--accent-cyan); background: rgba(0,245,255,0.04); }
+  .upload-zone .upload-icon { font-size: 32px; margin-bottom: 10px; }
+  .upload-zone p { font-size: 13px; color: var(--text-muted); }
+  .upload-zone strong { color: var(--accent-cyan); font-size: 14px; }
+
+  .urgency-select { display: flex; gap: 10px; }
+  .urgency-btn {
+    flex: 1; padding: 10px; border-radius: 8px; border: 1px solid var(--border);
+    background: var(--bg-secondary); color: var(--text-secondary);
+    font-size: 12px; font-weight: 600; cursor: pointer; text-align: center;
+    transition: all 0.2s; font-family: 'Be Vietnam Pro', sans-serif;
+  }
+  .urgency-btn.active-low { border-color: var(--accent-green); color: var(--accent-green); background: rgba(6,214,160,0.08); }
+  .urgency-btn.active-med { border-color: var(--accent-gold); color: var(--accent-gold); background: rgba(255,214,10,0.07); }
+  .urgency-btn.active-high { border-color: var(--accent-red); color: var(--accent-red); background: rgba(230,57,70,0.08); }
+  .urgency-btn:hover { border-color: var(--border-hover); }
+
+  /* ── HEATMAP / STATS ── */
+  .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-bottom: 40px; }
+  @media (max-width: 900px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 480px) { .stats-grid { grid-template-columns: 1fr; } }
+
+  .stat-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 14px; padding: 22px;
+    text-align: center;
+  }
+  .stat-card .big-num {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 38px; font-weight: 700; line-height: 1;
+    margin-bottom: 6px;
+  }
+  .stat-card .big-label { font-size: 12px; color: var(--text-muted); letter-spacing: 0.05em; text-transform: uppercase; }
+  .stat-card .change {
+    font-size: 12px; font-weight: 700; margin-top: 6px;
+  }
+  .change.up { color: var(--accent-red); }
+  .change.down { color: var(--accent-green); }
+
+  .map-placeholder {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 16px; padding: 24px; min-height: 400px;
+    display: flex; flex-direction: column;
+  }
+  .map-placeholder h3 { font-family: 'Rajdhani', sans-serif; font-size: 20px; font-weight: 700; margin-bottom: 20px; }
+
+  .vietnam-map-svg { flex: 1; display: flex; align-items: center; justify-content: center; position: relative; }
+
+  .region-list { display: flex; flex-direction: column; gap: 10px; }
+  .region-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 14px; border-radius: 8px;
+    background: var(--bg-secondary); border: 1px solid var(--border);
+  }
+  .region-bar-wrap { flex: 1; background: rgba(255,255,255,0.05); border-radius: 4px; height: 6px; overflow: hidden; }
+  .region-bar { height: 100%; border-radius: 4px; transition: width 1s ease; }
+  .region-name { font-size: 13px; font-weight: 600; min-width: 100px; color: var(--text-primary); }
+  .region-count { font-size: 13px; font-weight: 700; font-family: 'Rajdhani', sans-serif; min-width: 50px; text-align: right; }
+
+  /* ── ARCHITECTURE ── */
+  .arch-diagram {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 16px; padding: 32px; font-family: 'Rajdhani', sans-serif;
+    overflow: auto;
+  }
+
+  .arch-layer {
+    border: 1px solid; border-radius: 12px; padding: 16px 20px;
+    margin-bottom: 12px; position: relative;
+  }
+  .arch-layer h4 { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 10px; }
+  .arch-layer-nodes { display: flex; gap: 10px; flex-wrap: wrap; }
+  .arch-node {
+    padding: 7px 14px; border-radius: 8px; font-size: 12px; font-weight: 600;
+    display: flex; align-items: center; gap: 6px;
+  }
+
+  .layer-user { border-color: rgba(0,245,255,0.2); }
+  .layer-user h4 { color: var(--accent-cyan); }
+  .layer-user .arch-node { background: rgba(0,245,255,0.08); color: var(--accent-cyan); }
+
+  .layer-security { border-color: rgba(230,57,70,0.2); }
+  .layer-security h4 { color: var(--accent-red); }
+  .layer-security .arch-node { background: rgba(230,57,70,0.08); color: var(--accent-red); }
+
+  .layer-gateway { border-color: rgba(255,214,10,0.2); }
+  .layer-gateway h4 { color: var(--accent-gold); }
+  .layer-gateway .arch-node { background: rgba(255,214,10,0.07); color: var(--accent-gold); }
+
+  .layer-services { border-color: rgba(6,214,160,0.2); }
+  .layer-services h4 { color: var(--accent-green); }
+  .layer-services .arch-node { background: rgba(6,214,160,0.08); color: var(--accent-green); }
+
+  .layer-data { border-color: rgba(251,133,0,0.2); }
+  .layer-data h4 { color: var(--accent-orange); }
+  .layer-data .arch-node { background: rgba(251,133,0,0.08); color: var(--accent-orange); }
+
+  .arch-arrow {
+    text-align: center; color: var(--text-muted);
+    font-size: 18px; margin: 4px 0;
+  }
+
+  /* ── DATABASE ── */
+  .db-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+  .db-table {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 12px; overflow: hidden;
+  }
+  .db-table-head {
+    background: rgba(0,245,255,0.06); padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .db-table-head .tbl-icon { font-size: 16px; }
+  .db-table-head h4 { font-family: 'Rajdhani', sans-serif; font-size: 16px; font-weight: 700; color: var(--accent-cyan); }
+  .db-col { padding: 8px 16px; font-size: 13px; border-bottom: 1px solid var(--border); display: flex; gap: 8px; align-items: center; }
+  .db-col:last-child { border-bottom: none; }
+  .col-name { font-weight: 600; color: var(--text-primary); flex: 1; }
+  .col-type { font-size: 11px; color: var(--text-muted); font-family: 'Rajdhani', sans-serif; }
+  .col-badge { font-size: 10px; padding: 2px 7px; border-radius: 4px; font-weight: 700; }
+  .pk { background: rgba(255,214,10,0.1); color: var(--accent-gold); }
+  .fk { background: rgba(0,245,255,0.08); color: var(--accent-cyan); }
+  .enc { background: rgba(6,214,160,0.08); color: var(--accent-green); }
+  .idx { background: rgba(251,133,0,0.08); color: var(--accent-orange); }
+
+  /* ── CODE BLOCKS ── */
+  .code-section { margin-top: 20px; }
+  .code-tabs { display: flex; gap: 4px; margin-bottom: -1px; }
+  .code-tab {
+    padding: 8px 16px; font-size: 12px; font-weight: 600; cursor: pointer;
+    border: 1px solid var(--border); border-bottom: none;
+    border-radius: 8px 8px 0 0; color: var(--text-secondary);
+    background: var(--bg-card); letter-spacing: 0.03em;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    transition: all 0.2s;
+  }
+  .code-tab.active { color: var(--accent-cyan); background: var(--bg-secondary); border-color: var(--border-hover); }
+
+  .code-block {
+    background: #020810; border: 1px solid var(--border);
+    border-radius: 0 12px 12px 12px; padding: 24px;
+    overflow-x: auto; font-family: 'Courier New', monospace;
+    font-size: 13px; line-height: 1.7;
+    display: none;
+  }
+  .code-block.active { display: block; }
+  [data-theme="light"] .code-block { background: #f8fafc; }
+
+  .code-block .kw { color: #569cd6; }
+  .code-block .str { color: #ce9178; }
+  .code-block .cmt { color: #6a9955; }
+  .code-block .fn { color: #dcdcaa; }
+  .code-block .num { color: #b5cea8; }
+  .code-block .var { color: #9cdcfe; }
+  .code-block .cls { color: #4ec9b0; }
+  .code-block .prop { color: #92c9ef; }
+  .code-block .punc { color: #d4d4d4; }
+
+  /* ── KNOWLEDGE CENTER ── */
+  .faq-item {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 12px; margin-bottom: 10px; overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .faq-item:hover { border-color: var(--border-hover); }
+  .faq-q {
+    padding: 18px 20px; cursor: pointer;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 15px; font-weight: 600; color: var(--text-primary);
+  }
+  .faq-q .arrow { transition: transform 0.3s; font-size: 12px; color: var(--text-muted); }
+  .faq-item.open .faq-q .arrow { transform: rotate(180deg); }
+  .faq-a {
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.3s;
+    padding: 0 20px;
+    font-size: 14px; color: var(--text-secondary); line-height: 1.7;
+  }
+  .faq-item.open .faq-a { max-height: 300px; padding: 0 20px 18px; }
+
+  /* ── SECURITY BADGES ── */
+  .security-badges { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 20px; }
+  .sec-badge {
+    display: flex; align-items: center; gap: 8px;
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 8px; padding: 8px 14px;
+    font-size: 12px; font-weight: 600; color: var(--text-secondary);
+  }
+  .sec-badge .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .dot-green { background: var(--accent-green); box-shadow: 0 0 8px rgba(6,214,160,0.5); }
+  .dot-cyan { background: var(--accent-cyan); box-shadow: 0 0 8px rgba(0,245,255,0.5); }
+  .dot-gold { background: var(--accent-gold); box-shadow: 0 0 8px rgba(255,214,10,0.5); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--bg-secondary);
+    border-top: 1px solid var(--border);
+    padding: 48px 0 24px;
+    position: relative; z-index: 1;
+  }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+  @media (max-width: 900px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 480px) { .footer-grid { grid-template-columns: 1fr; } }
+
+  .footer-col h4 { font-family: 'Rajdhani', sans-serif; font-size: 16px; font-weight: 700; color: var(--text-primary); margin-bottom: 16px; }
+  .footer-col p { font-size: 13px; color: var(--text-muted); line-height: 1.7; }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .footer-col ul a { text-decoration: none; font-size: 13px; color: var(--text-muted); transition: color 0.2s; }
+  .footer-col ul a:hover { color: var(--accent-cyan); }
+
+  .footer-bottom {
+    border-top: 1px solid var(--border); padding-top: 20px;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 12px; color: var(--text-muted); flex-wrap: gap;
+  }
+  .footer-hotline { color: var(--accent-red); font-weight: 700; font-size: 16px; }
+
+  /* ── HOTLINE FLOATING ── */
+  .hotline-float {
+    position: fixed; bottom: 24px; right: 24px; z-index: 200;
+    display: flex; flex-direction: column; align-items: flex-end; gap: 10px;
+  }
+  .hotline-btn {
+    background: linear-gradient(135deg, var(--accent-red), #c1121f);
+    color: white; border: none; border-radius: 50px;
+    padding: 12px 20px; font-size: 14px; font-weight: 700;
+    cursor: pointer; display: flex; align-items: center; gap: 8px;
+    box-shadow: 0 4px 30px var(--accent-red-glow);
+    font-family: 'Be Vietnam Pro', sans-serif;
+    animation: pulse-red 2s infinite;
+  }
+  .chat-btn {
+    background: linear-gradient(135deg, var(--accent-cyan), #00b4d8);
+    color: #050b18; border: none; border-radius: 50px;
+    padding: 12px 20px; font-size: 14px; font-weight: 700;
+    cursor: pointer; display: flex; align-items: center; gap: 8px;
+    box-shadow: 0 4px 20px rgba(0,245,255,0.2);
+    font-family: 'Be Vietnam Pro', sans-serif;
+  }
+
+  /* ── NOTIFICATION TOAST ── */
+  .toast {
+    position: fixed; bottom: 100px; right: 24px; z-index: 300;
+    background: var(--bg-card); border: 1px solid rgba(6,214,160,0.3);
+    border-radius: 12px; padding: 16px 20px;
+    display: flex; align-items: flex-start; gap: 12px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+    min-width: 300px; max-width: 360px;
+    transform: translateX(110%); transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  .toast.show { transform: translateX(0); }
+  .toast-icon { font-size: 20px; flex-shrink: 0; }
+  .toast-content h5 { font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+  .toast-content p { font-size: 12px; color: var(--text-secondary); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .hero-visual { display: none; }
+    .hero-stats { gap: 20px; }
+    .stat-divider { display: none; }
+    .features-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; }
+    .search-bar { flex-direction: column; }
+  }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── NAV ACTIVE ── */
+  .nav-indicator {
+    height: 2px; background: var(--accent-cyan);
+    position: absolute; bottom: 0; transition: all 0.3s;
+    border-radius: 2px;
+  }
+</style>
+</head>
+<body>
+
+<!-- BACKGROUND EFFECTS -->
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+
+<!-- TOAST NOTIFICATION -->
+<div class="toast" id="toast">
+  <div class="toast-icon">🚨</div>
+  <div class="toast-content">
+    <h5>Cảnh báo mới!</h5>
+    <p>Phát hiện 3 website lừa đảo mạo danh ngân hàng trong 1 giờ qua.</p>
+  </div>
+</div>
+
+<!-- NAVBAR -->
+<nav>
+  <a href="#" class="nav-brand">
+    <div class="nav-logo">CA</div>
+    <div>
+      <div class="nav-title-main">CỔNG THÔNG TIN AN NINH MẠNG</div>
+      <div class="nav-title-sub">Cổng Phòng Chống Tội Phạm Mạng</div>
+    </div>
+  </a>
+
+  <ul class="nav-links">
+    <li><a href="#canh-bao" class="active">Cảnh Báo</a></li>
+    <li><a href="#khẩn-cap">Khẩn Cấp</a></li>
+    <li><a href="#bao-cao">Báo Cáo</a></li>
+    <li><a href="#ban-do">Bản Đồ</a></li>
+    <li><a href="#kien-truc">Kiến Trúc</a></li>
+    <li><a href="#kien-thuc">Kiến Thức</a></li>
+  </ul>
+
+  <div class="nav-actions">
+    <button class="btn-theme" onclick="toggleTheme()" id="themeBtn">🌙</button>
+    <button class="btn-emergency" onclick="showEmergency()">🚨 SOS KHẨN CẤP</button>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<main>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <div class="dot"></div>
+          <span>Hệ thống hoạt động 24/7 · Thời gian thực</span>
+        </div>
+
+        <h1>CỔNG THÔNG TIN<br><span class="highlight">PHÒNG CHỐNG</span><br><span class="highlight-red">TỘI PHẠM MẠNG</span></h1>
+        <div class="hero-sub">QUỐC GIA · PHÒNG CHỐNG TỘI PHẠM MẠNG</div>
+
+        <p>Hệ thống bảo mật cấp Nhà nước, hỗ trợ người dân nhận diện lừa đảo, báo cáo sự cố, và xử lý tình huống khẩn cấp trực tuyến. Được bảo vệ bởi kiến trúc Zero Trust &amp; mã hóa AES-256.</p>
+
+        <div class="hero-buttons">
+          <a href="#bao-cao" class="btn-primary">📋 Báo Cáo Sự Cố</a>
+          <a href="#canh-bao" class="btn-outline">🔍 Tra Cứu Lừa Đảo</a>
+        </div>
+
+        <div class="hero-stats">
+          <div class="stat-item">
+            <div class="stat-value" id="counter1">0</div>
+            <div class="stat-label">Vụ xử lý hôm nay</div>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <div class="stat-value" id="counter2">0</div>
+            <div class="stat-label">Cảnh báo hoạt động</div>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <div class="stat-value" id="counter3">0</div>
+            <div class="stat-label">Người dùng bảo vệ</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="hero-ring"></div>
+      <div class="hero-ring"></div>
+      <div class="hero-ring"></div>
+    </div>
+  </section>
+
+  <!-- ALERT TICKER -->
+  <div class="alert-ticker">
+    <div style="display:flex;align-items:center;padding:0 24px;overflow:hidden;">
+      <div class="ticker-label">⚠ CẢNH BÁO</div>
+      <div style="overflow:hidden;flex:1;">
+        <div class="ticker-inner">
+          <span class="ticker-item"><span class="tag">LỪAẢO</span> Giả mạo Vietcombank — SĐT: 0909.xxx.xxx — 30 phút trước</span>
+          <span class="ticker-item"><span class="tag">PHẦN MỀM ĐỘC HẠI</span> Ứng dụng giả mạo Bảo hiểm xã hội — Đã chặn 234 thiết bị</span>
+          <span class="ticker-item"><span class="tag">WEBSITE</span> ngan-hang-techcom.xyz — Đang hoạt động — Báo cáo ngay</span>
+          <span class="ticker-item"><span class="tag">SIM SWAP</span> Phát hiện 12 vụ SIM Swap tại Hà Nội trong 24h</span>
+          <span class="ticker-item"><span class="tag">DEEPFAKE</span> Cuộc gọi video giả mạo người thân lừa chuyển tiền — Cảnh báo toàn quốc</span>
+          <span class="ticker-item"><span class="tag">LỪAẢO</span> Giả mạo Vietcombank — SĐT: 0909.xxx.xxx — 30 phút trước</span>
+          <span class="ticker-item"><span class="tag">PHẦN MỀM ĐỘC HẠI</span> Ứng dụng giả mạo Bảo hiểm xã hội — Đã chặn 234 thiết bị</span>
+          <span class="ticker-item"><span class="tag">WEBSITE</span> ngan-hang-techcom.xyz — Đang hoạt động — Báo cáo ngay</span>
+          <span class="ticker-item"><span class="tag">SIM SWAP</span> Phát hiện 12 vụ SIM Swap tại Hà Nội trong 24h</span>
+          <span class="ticker-item"><span class="tag">DEEPFAKE</span> Cuộc gọi video giả mạo người thân lừa chuyển tiền — Cảnh báo toàn quốc</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FEATURES OVERVIEW -->
+  <section style="padding: 64px 0;">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-label">Chức năng hệ thống</div>
+        <div class="section-title">Bảo vệ toàn diện —<br>từ nhận diện đến xử lý</div>
+        <p class="section-desc">Hệ thống tích hợp 5 module chức năng hoạt động đồng bộ, hỗ trợ người dân từ giai đoạn nhận diện nguy cơ đến xử lý hậu quả sau tấn công mạng.</p>
+        <div class="security-badges" style="margin-top: 20px;">
+          <div class="sec-badge"><div class="dot dot-green"></div> AES-256 Encrypted</div>
+          <div class="sec-badge"><div class="dot dot-cyan"></div> TLS 1.3 Active</div>
+          <div class="sec-badge"><div class="dot dot-green"></div> Zero Trust Architecture</div>
+          <div class="sec-badge"><div class="dot dot-gold"></div> ISO/IEC 27001</div>
+          <div class="sec-badge"><div class="dot dot-green"></div> Uptime 99.99%</div>
+        </div>
+      </div>
+
+      <div class="features-grid reveal">
+        <div class="card" onclick="scrollTo('#canh-bao')">
+          <div class="card-icon icon-red">🎯</div>
+          <h3>Trung Tâm Cảnh Báo</h3>
+          <p>Danh sách số điện thoại, website, tài khoản ngân hàng lừa đảo cập nhật realtime. Tra cứu nhanh chỉ với 1 cú nhấp.</p>
+          <a href="#canh-bao" class="card-link">Tra cứu ngay →</a>
+        </div>
+
+        <div class="card" onclick="scrollTo('#khẩn-cap')">
+          <div class="card-icon icon-gold">⚡</div>
+          <h3>Xử Lý Khẩn Cấp</h3>
+          <p>Checklist xử lý tức thì trong 5 phút đầu khi phát hiện bị lừa đảo, hack tài khoản ngân hàng, mạng xã hội.</p>
+          <a href="#khẩn-cap" class="card-link">Xử lý ngay →</a>
+        </div>
+
+        <div class="card" onclick="scrollTo('#bao-cao')">
+          <div class="card-icon icon-cyan">📋</div>
+          <h3>Báo Cáo Sự Cố</h3>
+          <p>Nộp báo cáo có đính kèm bằng chứng, phân loại mức độ, tự động chuyển đến đơn vị điều tra phù hợp.</p>
+          <a href="#bao-cao" class="card-link">Báo cáo →</a>
+        </div>
+
+        <div class="card" onclick="scrollTo('#ban-do')">
+          <div class="card-icon icon-green">🗺️</div>
+          <h3>Bản Đồ An Ninh</h3>
+          <p>Heatmap trực quan các khu vực có nhiều vụ tội phạm mạng. Thống kê theo tỉnh/thành phố theo thời gian thực.</p>
+          <a href="#ban-do" class="card-link">Xem bản đồ →</a>
+        </div>
+
+        <div class="card" onclick="scrollTo('#kien-thuc')">
+          <div class="card-icon icon-orange">🎓</div>
+          <h3>Trung Tâm Kiến Thức</h3>
+          <p>Video hướng dẫn, FAQ, mô phỏng kịch bản lừa đảo thực tế để nâng cao nhận thức cộng đồng.</p>
+          <a href="#kien-thuc" class="card-link">Học ngay →</a>
+        </div>
+
+        <div class="card">
+          <div class="card-icon icon-cyan">🔒</div>
+          <h3>Bảo Mật Cấp Nhà Nước</h3>
+          <p>Kiến trúc Zero Trust, mã hóa end-to-end, audit trail đầy đủ, sẵn sàng phục vụ 100 triệu người dùng.</p>
+          <a href="#kien-truc" class="card-link">Xem kiến trúc →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CẢNH BÁO LỪA ĐẢO -->
+  <section id="canh-bao" style="padding: 64px 0; background: linear-gradient(180deg, transparent, rgba(230,57,70,0.03), transparent);">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-label">Module 01</div>
+        <div class="section-title">Trung Tâm Cảnh Báo Lừa Đảo</div>
+      </div>
+
+      <div class="search-section reveal">
+        <h3>🔍 Tra Cứu Nhanh</h3>
+        <p>Nhập số điện thoại, tên miền website, hoặc số tài khoản ngân hàng để kiểm tra</p>
+        <div class="search-bar">
+          <input type="text" id="searchInput" placeholder="Ví dụ: 0912345678 hoặc luadao.vn hoặc 19001234" />
+          <select style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 12px 16px; font-size: 14px; color: var(--text-primary); outline: none; font-family: 'Be Vietnam Pro', sans-serif;">
+            <option>Tất cả loại</option>
+            <option>Số điện thoại</option>
+            <option>Website</option>
+            <option>Tài khoản ngân hàng</option>
+          </select>
+          <button class="btn-search" onclick="doSearch()">🔍 Kiểm Tra</button>
+        </div>
+        <div id="searchResult" style="margin-top: 16px; display: none;"></div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;" class="reveal">
+        <div>
+          <h3 style="font-family: 'Rajdhani', sans-serif; font-size: 20px; font-weight: 700; margin-bottom: 20px; color: var(--text-primary);">⚠️ Cảnh Báo Mới Nhất</h3>
+          <div class="alerts-grid" style="grid-template-columns: 1fr;">
+            <div class="alert-card">
+              <div class="alert-severity sev-critical">NGUY HIỂM</div>
+              <div class="alert-content">
+                <h4>Giả mạo Cục Cảnh sát điều tra tội phạm</h4>
+                <p>Gọi điện tự xưng điều tra viên, yêu cầu chuyển tiền vào "tài khoản bảo lãnh". Đã có 47 nạn nhân trong tuần.</p>
+                <div class="alert-meta"><span>📞 19001234</span><span>🕐 2 giờ trước</span><span>📍 Toàn quốc</span></div>
+              </div>
+            </div>
+            <div class="alert-card">
+              <div class="alert-severity sev-critical">NGUY HIỂM</div>
+              <div class="alert-content">
+                <h4>Website đầu tư crypto giả mạo</h4>
+                <p>invest-vn.com mạo danh sàn đầu tư hợp pháp, thu thập CCCD và thông tin ngân hàng.</p>
+                <div class="alert-meta"><span>🌐 invest-vn.com</span><span>🕐 5 giờ trước</span><span>💰 1.2 tỷ đồng thiệt hại</span></div>
+              </div>
+            </div>
+            <div class="alert-card">
+              <div class="alert-severity sev-high">CAO</div>
+              <div class="alert-content">
+                <h4>Lừa đảo tuyển cộng tác viên online</h4>
+                <p>Yêu cầu nộp tiền cọc 2-5 triệu để "mở tài khoản đặt hàng", sau đó biến mất.</p>
+                <div class="alert-meta"><span>💬 Zalo/Telegram</span><span>🕐 8 giờ trước</span><span>📍 TP.HCM, Hà Nội</span></div>
+              </div>
+            </div>
+            <div class="alert-card">
+              <div class="alert-severity sev-medium">TRUNG BÌNH</div>
+              <div class="alert-content">
+                <h4>Ứng dụng vay tiền giả mạo</h4>
+                <p>App "VayNhanh247" không có trong Play Store chính thức, thu thập danh bạ và tống tiền.</p>
+                <div class="alert-meta"><span>📱 APK giả mạo</span><span>🕐 1 ngày trước</span><span>📍 Miền Nam</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h3 style="font-family: 'Rajdhani', sans-serif; font-size: 20px; font-weight: 700; margin-bottom: 20px; color: var(--text-primary);">📊 Thống Kê Tháng Này</h3>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+            <div class="stat-card">
+              <div class="big-num" style="color: var(--accent-red);">2,847</div>
+              <div class="big-label">Vụ báo cáo</div>
+              <div class="change up">↑ 12% so tháng trước</div>
+            </div>
+            <div class="stat-card">
+              <div class="big-num" style="color: var(--accent-orange);">189</div>
+              <div class="big-label">Website bị chặn</div>
+              <div class="change up">↑ 34 tuần này</div>
+            </div>
+            <div class="stat-card">
+              <div class="big-num" style="color: var(--accent-gold);">48.2B</div>
+              <div class="big-label">VND thiệt hại</div>
+              <div class="change up">↑ 8% so tháng trước</div>
+            </div>
+            <div class="stat-card">
+              <div class="big-num" style="color: var(--accent-green);">76%</div>
+              <div class="big-label">Tỷ lệ giải quyết</div>
+              <div class="change down">↑ 4% cải thiện</div>
+            </div>
+          </div>
+
+          <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 20px; margin-top: 16px;">
+            <h4 style="font-family: 'Rajdhani', sans-serif; font-size: 17px; font-weight: 700; margin-bottom: 16px; color: var(--text-primary);">📱 Loại Lừa Đảo Phổ Biến</h4>
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+              <div style="display: flex; align-items: center; gap: 12px;">
+                <span style="font-size: 13px; color: var(--text-secondary); min-width: 160px;">Đầu tư tài chính giả</span>
+                <div style="flex: 1; background: var(--bg-secondary); border-radius: 4px; height: 8px; overflow: hidden;">
+                  <div style="width: 78%; height: 100%; background: var(--accent-red); border-radius: 4px;"></div>
+                </div>
+                <span style="font-size: 13px; font-weight: 700; color: var(--accent-red); min-width: 35px;">78%</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 12px;">
+                <span style="font-size: 13px; color: var(--text-secondary); min-width: 160px;">Giả mạo công quyền</span>
+                <div style="flex: 1; background: var(--bg-secondary); border-radius: 4px; height: 8px; overflow: hidden;">
+                  <div style="width: 56%; height: 100%; background: var(--accent-orange); border-radius: 4px;"></div>
+                </div>
+                <span style="font-size: 13px; font-weight: 700; color: var(--accent-orange); min-width: 35px;">56%</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 12px;">
+                <span style="font-size: 13px; color: var(--text-secondary); min-width: 160px;">Cộng tác viên online</span>
+                <div style="flex: 1; background: var(--bg-secondary); border-radius: 4px; height: 8px; overflow: hidden;">
+                  <div style="width: 43%; height: 100%; background: var(--accent-gold); border-radius: 4px;"></div>
+                </div>
+                <span style="font-size: 13px; font-weight: 700; color: var(--accent-gold); min-width: 35px;">43%</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 12px;">
+                <span style="font-size: 13px; color: var(--text-secondary); min-width: 160px;">Lừa đảo qua SMS</span>
+                <div style="flex: 1; background: var(--bg-secondary); border-radius: 4px; height: 8px; overflow: hidden;">
+                  <div style="width: 31%; height: 100%; background: var(--accent-cyan); border-radius: 4px;"></div>
+                </div>
+                <span style="font-size: 13px; font-weight: 700; color: var(--accent-cyan); min-width: 35px;">31%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- KHẨN CẤP -->
+  <section id="khẩn-cap" style="padding: 64px 0;">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-label">Module 02</div>
+        <div class="section-title">Xử Lý Khẩn Cấp — 5 Phút Đầu</div>
+        <p class="section-desc">Trong 5 phút đầu khi phát hiện bị tấn công, việc phản ứng nhanh và đúng có thể ngăn chặn thiệt hại nghiêm trọng. Làm theo từng bước dưới đây.</p>
+      </div>
+
+      <div class="emergency-section reveal">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 20px;">
+          <div>
+            <h3 style="font-family: 'Rajdhani', sans-serif; font-size: 24px; font-weight: 700; color: var(--accent-red); margin-bottom: 8px;">🏦 Bị Lừa Chuyển Tiền / Hack Ngân Hàng</h3>
+            <p style="font-size: 13px; color: var(--text-secondary);">Thực hiện ngay — mỗi giây đều quan trọng</p>
+          </div>
+          <div style="text-align: right;">
+            <div style="font-family: 'Rajdhani', sans-serif; font-size: 28px; font-weight: 700; color: var(--accent-red);">ĐƯỜNG DÂY KHẨN CẤP</div>
+            <div style="font-size: 12px; color: var(--text-muted);">Miễn phí · 24/7</div>
+          </div>
+        </div>
+
+        <div class="emergency-grid">
+          <div class="emergency-step">
+            <div class="step-num">1</div>
+            <div>
+              <h4>Liên hệ ngân hàng NGAY</h4>
+              <p>Gọi hotline ngân hàng yêu cầu phong tỏa tài khoản tạm thời. Vietcombank: 1900 545 413 | BIDV: 19009247 | Agribank: 1900 558 818</p>
+            </div>
+          </div>
+          <div class="emergency-step">
+            <div class="step-num">2</div>
+            <div>
+              <h4>Báo cáo cơ quan chức năng</h4>
+              <p>Báo ngay cho cơ quan có thẩm quyền. Cung cấp: số tiền, thời gian, tài khoản nhận, phương thức chuyển khoản.</p>
+            </div>
+          </div>
+          <div class="emergency-step">
+            <div class="step-num">3</div>
+            <div>
+              <h4>Chụp ảnh/lưu bằng chứng</h4>
+              <p>Screenshot lịch sử giao dịch, tin nhắn lừa đảo, thông tin tài khoản nhận. Đừng xóa bất kỳ tin nhắn nào.</p>
+            </div>
+          </div>
+          <div class="emergency-step">
+            <div class="step-num">4</div>
+            <div>
+              <h4>Nộp báo cáo trực tuyến</h4>
+              <p>Điền form báo cáo ngay trên cổng này, đính kèm bằng chứng để hỗ trợ điều tra viên tiếp cận nhanh nhất.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 24px;" class="reveal">
+        <div style="background: var(--bg-card); border: 1px solid rgba(0,245,255,0.15); border-radius: 16px; padding: 28px;">
+          <h3 style="font-family: 'Rajdhani', sans-serif; font-size: 20px; font-weight: 700; color: var(--accent-cyan); margin-bottom: 20px;">📱 Bị Hack Facebook / Zalo</h3>
+          <div style="display: flex; flex-direction: column; gap: 12px;">
+            <div style="display: flex; gap: 12px; align-items: flex-start;">
+              <div style="width: 28px; height: 28px; background: rgba(0,245,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--accent-cyan); flex-shrink: 0;">1</div>
+              <div>
+                <div style="font-size: 14px; font-weight: 600; color: var(--text-primary);">Đổi mật khẩu email gốc ngay</div>
+                <div style="font-size: 13px; color: var(--text-secondary); margin-top: 3px;">Email liên kết tài khoản là chìa khóa để lấy lại quyền truy cập.</div>
+              </div>
+            </div>
+            <div style="display: flex; gap: 12px; align-items: flex-start;">
+              <div style="width: 28px; height: 28px; background: rgba(0,245,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--accent-cyan); flex-shrink: 0;">2</div>
+              <div>
+                <div style="font-size: 14px; font-weight: 600; color: var(--text-primary);">Kích hoạt xác thực 2 bước</div>
+                <div style="font-size: 13px; color: var(--text-secondary); margin-top: 3px;">Dùng Google Authenticator hoặc SMS OTP để bảo vệ tài khoản.</div>
+              </div>
+            </div>
+            <div style="display: flex; gap: 12px; align-items: flex-start;">
+              <div style="width: 28px; height: 28px; background: rgba(0,245,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--accent-cyan); flex-shrink: 0;">3</div>
+              <div>
+                <div style="font-size: 14px; font-weight: 600; color: var(--text-primary);">Thông báo bạn bè / nhóm</div>
+                <div style="font-size: 13px; color: var(--text-secondary); margin-top: 3px;">Kẻ tấn công thường dùng tài khoản của bạn để lừa đảo người thân.</div>
+              </div>
+            </div>
+            <div style="display: flex; gap: 12px; align-items: flex-start;">
+              <div style="width: 28px; height: 28px; background: rgba(0,245,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--accent-cyan); flex-shrink: 0;">4</div>
+              <div>
+                <div style="font-size: 14px; font-weight: 600; color: var(--text-primary);">Trình báo Facebook/Zalo</div>
+                <div style="font-size: 13px; color: var(--text-secondary); margin-top: 3px;">Sử dụng tính năng "Báo cáo tài khoản bị xâm phạm" trong Help Center.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="background: var(--bg-card); border: 1px solid rgba(255,214,10,0.15); border-radius: 16px; padding: 28px;">
+          <h3 style="font-family: 'Rajdhani', sans-serif; font-size: 20px; font-weight: 700; color: var(--accent-gold); margin-bottom: 20px;">💻 Bị Nhiễm Mã Độc</h3>
+          <div style="display: flex; flex-direction: column; gap: 12px;">
+            <div style="display: flex; gap: 12px; align-items: flex-start;">
+              <div style="width: 28px; height: 28px; background: rgba(255,214,10,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--accent-gold); flex-shrink: 0;">1</div>
+              <div>
+                <div style="font-size: 14px; font-weight: 600; color: var(--text-primary);">Ngắt kết nối Internet ngay</div>
+                <div style="font-size: 13px; color: var(--text-secondary); margin-top: 3px;">Rút cáp LAN và tắt WiFi để ngăn dữ liệu bị exfiltrate ra ngoài.</div>
+              </div>
+            </div>
+            <div style="display: flex; gap: 12px; align-items: flex-start;">
+              <div style="width: 28px; height: 28px; background: rgba(255,214,10,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--accent-gold); flex-shrink: 0;">2</div>
+              <div>
+                <div style="font-size: 14px; font-weight: 600; color: var(--text-primary);">KHÔNG tắt máy hoàn toàn</div>
+                <div style="font-size: 13px; color: var(--text-secondary); margin-top: 3px;">Giữ nguyên trạng thái để điều tra viên thu thập forensics từ RAM.</div>
+              </div>
+            </div>
+            <div style="display: flex; gap: 12px; align-items: flex-start;">
+              <div style="width: 28px; height: 28px; background: rgba(255,214,10,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--accent-gold); flex-shrink: 0;">3</div>
+              <div>
+                <div style="font-size: 14px; font-weight: 600; color: var(--text-primary);">Đổi mật khẩu từ thiết bị khác</div>
+                <div style="font-size: 13px; color: var(--text-secondary); margin-top: 3px;">Dùng điện thoại hoặc máy khác để đổi mật khẩu email và ngân hàng.</div>
+              </div>
+            </div>
+            <div style="display: flex; gap: 12px; align-items: flex-start;">
+              <div style="width: 28px; height: 28px; background: rgba(255,214,10,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--accent-gold); flex-shrink: 0;">4</div>
+              <div>
+                <div style="font-size: 14px; font-weight: 600; color: var(--text-primary);">Liên hệ VNCERT/CC</div>
+                <div style="font-size: 13px; color: var(--text-secondary); margin-top: 3px;">Trung tâm Ứng cứu Sự cố An toàn mạng Quốc gia.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BÁO CÁO SỰ CỐ -->
+  <section id="bao-cao" style="padding: 64px 0; background: linear-gradient(180deg, transparent, rgba(0,245,255,0.02), transparent);">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-label">Module 03</div>
+        <div class="section-title">Báo Cáo Sự Cố Trực Tuyến</div>
+        <p class="section-desc">Báo cáo được mã hóa AES-256, chuyển tự động đến đơn vị có thẩm quyền trong vòng 15 phút.</p>
+      </div>
+
+      <div class="report-form reveal">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 28px; flex-wrap: wrap; gap: 16px;">
+          <h3 style="font-family: 'Rajdhani', sans-serif; font-size: 22px; font-weight: 700; color: var(--text-primary);">📋 Biểu Mẫu Báo Cáo Tội Phạm Mạng</h3>
+          <div class="sec-badge"><div class="dot dot-green"></div> Mã hóa end-to-end</div>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Họ và tên người báo cáo *</label>
+            <input type="text" placeholder="Nguyễn Văn A" />
+          </div>
+          <div class="form-group">
+            <label>Số điện thoại *</label>
+            <input type="tel" placeholder="0912 345 678" />
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" placeholder="email@example.com" />
+          </div>
+          <div class="form-group">
+            <label>Tỉnh / Thành phố *</label>
+            <select>
+              <option>-- Chọn tỉnh/thành --</option>
+              <option>Hà Nội</option>
+              <option>TP. Hồ Chí Minh</option>
+              <option>Đà Nẵng</option>
+              <option>Cần Thơ</option>
+              <option>Hải Phòng</option>
+              <option>Khác</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Loại tội phạm mạng *</label>
+            <select>
+              <option>-- Chọn loại --</option>
+              <option>Lừa đảo tài chính</option>
+              <option>Giả mạo cơ quan công quyền</option>
+              <option>Hack tài khoản mạng xã hội</option>
+              <option>Phần mềm độc hại / Ransomware</option>
+              <option>Tống tiền trực tuyến</option>
+              <option>Đánh cắp thông tin cá nhân</option>
+              <option>Khác</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Số tiền thiệt hại (nếu có)</label>
+            <input type="text" placeholder="Ví dụ: 5.000.000 VNĐ" />
+          </div>
+
+          <div class="form-group full-width">
+            <label>Mức độ khẩn cấp *</label>
+            <div class="urgency-select">
+              <button class="urgency-btn" onclick="setUrgency(this,'active-low')">🟢 Thấp<br><small>Đang điều tra</small></button>
+              <button class="urgency-btn active-med" onclick="setUrgency(this,'active-med')">🟡 Trung bình<br><small>Trong 24 giờ</small></button>
+              <button class="urgency-btn" onclick="setUrgency(this,'active-high')">🔴 Khẩn cấp<br><small>Đang diễn ra</small></button>
+            </div>
+          </div>
+
+          <div class="form-group full-width">
+            <label>Mô tả chi tiết sự cố *</label>
+            <textarea placeholder="Mô tả đầy đủ: Sự việc xảy ra khi nào, như thế nào, đối tượng đã làm gì, thông tin liên quan (số điện thoại, tên miền website, tài khoản ngân hàng của đối tượng)..."></textarea>
+          </div>
+
+          <div class="form-group full-width">
+            <label>Đính kèm bằng chứng</label>
+            <div class="upload-zone" onclick="triggerUpload()">
+              <div class="upload-icon">📎</div>
+              <strong>Nhấn để tải lên hoặc kéo thả file vào đây</strong>
+              <p>Chấp nhận: Screenshot, Video, PDF, Âm thanh (Tối đa 50MB)</p>
+              <p style="color: var(--accent-green); font-size: 12px; margin-top: 6px;">🔒 File được mã hóa AES-256 khi tải lên</p>
+              <input type="file" id="fileInput" style="display:none" multiple accept="image/*,video/*,.pdf,.mp3,.wav" />
+            </div>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 14px; margin-top: 24px; flex-wrap: wrap; align-items: center;">
+          <button class="btn-primary" onclick="submitReport()" style="font-size: 15px; padding: 14px 32px;">
+            📤 Nộp Báo Cáo Ngay
+          </button>
+          <div style="font-size: 12px; color: var(--text-muted); line-height: 1.6;">
+            ✓ Thông tin được bảo mật tuyệt đối<br>
+            ✓ Phản hồi trong vòng 15 phút
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BẢN ĐỒ AN NINH -->
+  <section id="ban-do" style="padding: 64px 0;">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-label">Module 04</div>
+        <div class="section-title">Bản Đồ An Ninh Mạng Quốc Gia</div>
+        <p class="section-desc">Phân tích theo địa lý các vụ tội phạm mạng được báo cáo, cập nhật theo thời gian thực.</p>
+      </div>
+
+      <div class="stats-grid reveal">
+        <div class="stat-card">
+          <div class="big-num" style="color: var(--accent-red);">12,847</div>
+          <div class="big-label">Tổng vụ tháng này</div>
+          <div class="change up">↑ 8.3%</div>
+        </div>
+        <div class="stat-card">
+          <div class="big-num" style="color: var(--accent-orange);">63</div>
+          <div class="big-label">Tỉnh có báo cáo</div>
+          <div class="change down">Toàn quốc</div>
+        </div>
+        <div class="stat-card">
+          <div class="big-num" style="color: var(--accent-gold);">342B</div>
+          <div class="big-label">VND thiệt hại YTD</div>
+          <div class="change up">↑ 15.2%</div>
+        </div>
+        <div class="stat-card">
+          <div class="big-num" style="color: var(--accent-green);">2,341</div>
+          <div class="big-label">Đối tượng bị bắt</div>
+          <div class="change down">↑ 23% tốt hơn</div>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 24px;" class="reveal">
+        <div class="map-placeholder">
+          <h3 style="font-size: 18px; margin-bottom: 6px;">🗺️ Heatmap Tội Phạm Mạng — Tháng 2/2026</h3>
+          <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 20px;">Độ đậm thể hiện mật độ vụ việc theo khu vực</p>
+          <div style="flex: 1; background: var(--bg-secondary); border-radius: 12px; display: flex; align-items: center; justify-content: center; min-height: 300px; position: relative; overflow: hidden;">
+            <svg viewBox="0 0 300 500" style="width: 100%; max-width: 200px; opacity: 0.8;">
+              <!-- Simplified Vietnam shape -->
+              <ellipse cx="130" cy="80" rx="45" ry="60" fill="rgba(230,57,70,0.6)" />
+              <ellipse cx="140" cy="200" rx="35" ry="80" fill="rgba(251,133,0,0.5)" />
+              <ellipse cx="150" cy="350" rx="55" ry="100" fill="rgba(255,214,10,0.45)" />
+              <ellipse cx="135" cy="80" rx="20" ry="25" fill="rgba(230,57,70,0.9)" />
+              <text x="105" y="85" fill="white" font-size="10" font-weight="bold">HÀ NỘI</text>
+              <ellipse cx="175" cy="420" rx="40" ry="30" fill="rgba(230,57,70,0.85)" />
+              <text x="143" y="425" fill="white" font-size="10" font-weight="bold">TP.HCM</text>
+              <ellipse cx="155" cy="280" rx="20" ry="18" fill="rgba(0,245,255,0.6)" />
+              <text x="133" y="285" fill="white" font-size="9">ĐÀ NẴNG</text>
+            </svg>
+            <div style="position: absolute; bottom: 16px; right: 16px; display: flex; gap: 8px; align-items: center; font-size: 11px; color: var(--text-muted);">
+              <div style="display: flex; align-items: center; gap: 4px;"><div style="width: 12px; height: 12px; border-radius: 2px; background: rgba(230,57,70,0.8);"></div>Cao</div>
+              <div style="display: flex; align-items: center; gap: 4px;"><div style="width: 12px; height: 12px; border-radius: 2px; background: rgba(251,133,0,0.6);"></div>Trung bình</div>
+              <div style="display: flex; align-items: center; gap: 4px;"><div style="width: 12px; height: 12px; border-radius: 2px; background: rgba(255,214,10,0.4);"></div>Thấp</div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 24px; height: 100%;">
+            <h3 style="font-family: 'Rajdhani', sans-serif; font-size: 18px; font-weight: 700; margin-bottom: 20px; color: var(--text-primary);">🏆 Top 8 Tỉnh/Thành</h3>
+            <div class="region-list">
+              <div class="region-item">
+                <span class="region-name">TP. Hồ Chí Minh</span>
+                <div class="region-bar-wrap"><div class="region-bar" style="width:95%; background: var(--accent-red);"></div></div>
+                <span class="region-count" style="color: var(--accent-red);">3,241</span>
+              </div>
+              <div class="region-item">
+                <span class="region-name">Hà Nội</span>
+                <div class="region-bar-wrap"><div class="region-bar" style="width:80%; background: var(--accent-orange);"></div></div>
+                <span class="region-count" style="color: var(--accent-orange);">2,714</span>
+              </div>
+              <div class="region-item">
+                <span class="region-name">Bình Dương</span>
+                <div class="region-bar-wrap"><div class="region-bar" style="width:55%; background: var(--accent-gold);"></div></div>
+                <span class="region-count" style="color: var(--accent-gold);">1,872</span>
+              </div>
+              <div class="region-item">
+                <span class="region-name">Đà Nẵng</span>
+                <div class="region-bar-wrap"><div class="region-bar" style="width:45%; background: var(--accent-cyan);"></div></div>
+                <span class="region-count" style="color: var(--accent-cyan);">1,534</span>
+              </div>
+              <div class="region-item">
+                <span class="region-name">Đồng Nai</span>
+                <div class="region-bar-wrap"><div class="region-bar" style="width:38%; background: var(--accent-green);"></div></div>
+                <span class="region-count" style="color: var(--accent-green);">1,291</span>
+              </div>
+              <div class="region-item">
+                <span class="region-name">Hải Phòng</span>
+                <div class="region-bar-wrap"><div class="region-bar" style="width:30%; background: var(--text-muted);"></div></div>
+                <span class="region-count" style="color: var(--text-muted);">1,020</span>
+              </div>
+              <div class="region-item">
+                <span class="region-name">Cần Thơ</span>
+                <div class="region-bar-wrap"><div class="region-bar" style="width:22%; background: var(--text-muted);"></div></div>
+                <span class="region-count" style="color: var(--text-muted);">748</span>
+              </div>
+              <div class="region-item">
+                <span class="region-name">Long An</span>
+                <div class="region-bar-wrap"><div class="region-bar" style="width:16%; background: var(--text-muted);"></div></div>
+                <span class="region-count" style="color: var(--text-muted);">544</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- KIẾN TRÚC HỆ THỐNG -->
+  <section id="kien-truc" style="padding: 64px 0; background: linear-gradient(180deg, transparent, rgba(0,245,255,0.02), transparent);">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-label">Tài Liệu Kỹ Thuật</div>
+        <div class="section-title">Kiến Trúc Hệ Thống &amp; Bảo Mật</div>
+      </div>
+
+      <div class="arch-diagram reveal">
+        <h3 style="font-family: 'Rajdhani', sans-serif; font-size: 20px; font-weight: 700; margin-bottom: 24px; color: var(--text-primary);">📐 Sơ Đồ Kiến Trúc Hệ Thống</h3>
+
+        <div class="arch-layer layer-user">
+          <h4>🌐 TẦNG NGƯỜI DÙNG (User Layer)</h4>
+          <div class="arch-layer-nodes">
+            <div class="arch-node">🖥️ Web Browser (HTTPS)</div>
+            <div class="arch-node">📱 Mobile App (iOS/Android)</div>
+            <div class="arch-node">🔌 Public API Consumer</div>
+          </div>
+        </div>
+        <div class="arch-arrow">⬇️ TLS 1.3 Encrypted</div>
+
+        <div class="arch-layer layer-security">
+          <h4>🛡️ TẦNG BẢO MẬT (Security Layer)</h4>
+          <div class="arch-layer-nodes">
+            <div class="arch-node">🔥 WAF (Web Application Firewall)</div>
+            <div class="arch-node">🚦 DDoS Protection (Cloudflare)</div>
+            <div class="arch-node">🔍 IDS/IPS (Snort/Suricata)</div>
+            <div class="arch-node">📋 SIEM (Security Monitoring)</div>
+            <div class="arch-node">🚫 IP Blacklist Filter</div>
+          </div>
+        </div>
+        <div class="arch-arrow">⬇️ Filtered &amp; Validated Traffic</div>
+
+        <div class="arch-layer layer-gateway">
+          <h4>🔄 API GATEWAY (Kong / AWS API Gateway)</h4>
+          <div class="arch-layer-nodes">
+            <div class="arch-node">🔐 JWT Authentication</div>
+            <div class="arch-node">👤 RBAC Authorization</div>
+            <div class="arch-node">⏱️ Rate Limiting (100 req/min)</div>
+            <div class="arch-node">🔀 Load Balancing</div>
+            <div class="arch-node">📊 Request Logging</div>
+            <div class="arch-node">🔄 CSRF Protection</div>
+          </div>
+        </div>
+        <div class="arch-arrow">⬇️ Authenticated &amp; Authorized</div>
+
+        <div class="arch-layer layer-services">
+          <h4>⚙️ MICROSERVICES LAYER</h4>
+          <div class="arch-layer-nodes">
+            <div class="arch-node">🎯 Alert Service</div>
+            <div class="arch-node">📋 Report Service</div>
+            <div class="arch-node">👤 Auth Service</div>
+            <div class="arch-node">🔍 Search Service</div>
+            <div class="arch-node">📊 Analytics Service</div>
+            <div class="arch-node">📬 Notification Service</div>
+            <div class="arch-node">📁 File Service</div>
+            <div class="arch-node">🗺️ GeoMap Service</div>
+          </div>
+        </div>
+        <div class="arch-arrow">⬇️ Service Mesh (Istio)</div>
+
+        <div class="arch-layer layer-data">
+          <h4>🗄️ DATA LAYER</h4>
+          <div class="arch-layer-nodes">
+            <div class="arch-node">🐘 PostgreSQL (Primary DB)</div>
+            <div class="arch-node">⚡ Redis (Cache + Session)</div>
+            <div class="arch-node">🔎 Elasticsearch (Search)</div>
+            <div class="arch-node">📦 MinIO (File Storage)</div>
+            <div class="arch-node">📈 InfluxDB (Metrics)</div>
+            <div class="arch-node">🔒 HashiCorp Vault (Secrets)</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DATABASE DESIGN -->
+      <div style="margin-top: 40px;" class="reveal">
+        <h3 style="font-family: 'Rajdhani', sans-serif; font-size: 22px; font-weight: 700; margin-bottom: 24px; color: var(--text-primary);">🗄️ Thiết Kế Database Schema</h3>
+        <div class="db-grid">
+          <div class="db-table">
+            <div class="db-table-head"><div class="tbl-icon">👤</div><h4>users</h4></div>
+            <div class="db-col"><span class="col-name">id</span><span class="col-type">UUID</span><span class="col-badge pk">PK</span></div>
+            <div class="db-col"><span class="col-name">full_name</span><span class="col-type">VARCHAR(255)</span><span class="col-badge enc">ENC</span></div>
+            <div class="db-col"><span class="col-name">email</span><span class="col-type">VARCHAR(255)</span><span class="col-badge enc">ENC</span></div>
+            <div class="db-col"><span class="col-name">phone</span><span class="col-type">VARCHAR(15)</span><span class="col-badge enc">ENC</span></div>
+            <div class="db-col"><span class="col-name">password_hash</span><span class="col-type">TEXT (bcrypt)</span></div>
+            <div class="db-col"><span class="col-name">role</span><span class="col-type">ENUM</span><span class="col-badge idx">IDX</span></div>
+            <div class="db-col"><span class="col-name">totp_secret</span><span class="col-type">TEXT</span><span class="col-badge enc">ENC</span></div>
+            <div class="db-col"><span class="col-name">created_at</span><span class="col-type">TIMESTAMPTZ</span></div>
+            <div class="db-col"><span class="col-name">last_login_ip</span><span class="col-type">INET</span><span class="col-badge enc">ENC</span></div>
+          </div>
+
+          <div class="db-table">
+            <div class="db-table-head"><div class="tbl-icon">📋</div><h4>incident_reports</h4></div>
+            <div class="db-col"><span class="col-name">id</span><span class="col-type">UUID</span><span class="col-badge pk">PK</span></div>
+            <div class="db-col"><span class="col-name">user_id</span><span class="col-type">UUID</span><span class="col-badge fk">FK</span></div>
+            <div class="db-col"><span class="col-name">report_code</span><span class="col-type">VARCHAR(20)</span><span class="col-badge idx">IDX</span></div>
+            <div class="db-col"><span class="col-name">incident_type</span><span class="col-type">ENUM</span><span class="col-badge idx">IDX</span></div>
+            <div class="db-col"><span class="col-name">description</span><span class="col-type">TEXT</span><span class="col-badge enc">ENC</span></div>
+            <div class="db-col"><span class="col-name">severity</span><span class="col-type">ENUM</span></div>
+            <div class="db-col"><span class="col-name">status</span><span class="col-type">ENUM</span><span class="col-badge idx">IDX</span></div>
+            <div class="db-col"><span class="col-name">amount_lost</span><span class="col-type">DECIMAL</span><span class="col-badge enc">ENC</span></div>
+            <div class="db-col"><span class="col-name">province_code</span><span class="col-type">CHAR(2)</span><span class="col-badge idx">IDX</span></div>
+          </div>
+
+          <div class="db-table">
+            <div class="db-table-head"><div class="tbl-icon">🚨</div><h4>fraud_alerts</h4></div>
+            <div class="db-col"><span class="col-name">id</span><span class="col-type">UUID</span><span class="col-badge pk">PK</span></div>
+            <div class="db-col"><span class="col-name">alert_type</span><span class="col-type">ENUM</span><span class="col-badge idx">IDX</span></div>
+            <div class="db-col"><span class="col-name">phone_number</span><span class="col-type">VARCHAR(15)</span><span class="col-badge idx">IDX</span></div>
+            <div class="db-col"><span class="col-name">website_url</span><span class="col-type">TEXT</span><span class="col-badge idx">IDX</span></div>
+            <div class="db-col"><span class="col-name">bank_account</span><span class="col-type">VARCHAR(30)</span><span class="col-badge idx">IDX</span></div>
+            <div class="db-col"><span class="col-name">severity_level</span><span class="col-type">SMALLINT</span></div>
+            <div class="db-col"><span class="col-name">is_verified</span><span class="col-type">BOOLEAN</span></div>
+            <div class="db-col"><span class="col-name">report_count</span><span class="col-type">INTEGER</span></div>
+            <div class="db-col"><span class="col-name">created_at</span><span class="col-type">TIMESTAMPTZ</span></div>
+          </div>
+
+          <div class="db-table">
+            <div class="db-table-head"><div class="tbl-icon">📝</div><h4>audit_logs</h4></div>
+            <div class="db-col"><span class="col-name">id</span><span class="col-type">BIGSERIAL</span><span class="col-badge pk">PK</span></div>
+            <div class="db-col"><span class="col-name">user_id</span><span class="col-type">UUID</span><span class="col-badge fk">FK</span></div>
+            <div class="db-col"><span class="col-name">action</span><span class="col-type">VARCHAR(100)</span><span class="col-badge idx">IDX</span></div>
+            <div class="db-col"><span class="col-name">resource_type</span><span class="col-type">VARCHAR(50)</span></div>
+            <div class="db-col"><span class="col-name">resource_id</span><span class="col-type">UUID</span></div>
+            <div class="db-col"><span class="col-name">ip_address</span><span class="col-type">INET</span><span class="col-badge enc">ENC</span></div>
+            <div class="db-col"><span class="col-name">user_agent</span><span class="col-type">TEXT</span></div>
+            <div class="db-col"><span class="col-name">timestamp</span><span class="col-type">TIMESTAMPTZ</span><span class="col-badge idx">IDX</span></div>
+            <div class="db-col"><span class="col-name">checksum</span><span class="col-type">CHAR(64)</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CODE SAMPLES -->
+      <div style="margin-top: 40px;" class="reveal">
+        <h3 style="font-family: 'Rajdhani', sans-serif; font-size: 22px; font-weight: 700; margin-bottom: 24px; color: var(--text-primary);">💻 Code Mẫu Minh Họa</h3>
+
+        <div class="code-section">
+          <div class="code-tabs">
+            <button class="code-tab active" onclick="showTab('tab-auth')">🔐 Auth Middleware</button>
+            <button class="code-tab" onclick="showTab('tab-report')">📋 Report API</button>
+            <button class="code-tab" onclick="showTab('tab-ratelimit')">⏱️ Rate Limiting</button>
+            <button class="code-tab" onclick="showTab('tab-encrypt')">🔒 Encryption</button>
+          </div>
+
+          <div class="code-block active" id="tab-auth">
+<span class="cmt">// ── auth.middleware.ts ── JWT + RBAC + 2FA Validation</span>
+<span class="kw">import</span> <span class="punc">{</span> <span class="var">Injectable</span><span class="punc">,</span> <span class="var">UnauthorizedException</span> <span class="punc">}</span> <span class="kw">from</span> <span class="str">'@nestjs/common'</span><span class="punc">;</span>
+<span class="kw">import</span> <span class="punc">{</span> <span class="var">JwtService</span> <span class="punc">}</span> <span class="kw">from</span> <span class="str">'@nestjs/jwt'</span><span class="punc">;</span>
+<span class="kw">import</span> <span class="punc">{</span> <span class="var">totp</span> <span class="punc">}</span> <span class="kw">from</span> <span class="str">'otplib'</span><span class="punc">;</span>
+
+<span class="cls">@Injectable</span><span class="punc">()</span>
+<span class="kw">export class</span> <span class="cls">AuthMiddleware</span> <span class="punc">{</span>
+  <span class="fn">constructor</span><span class="punc">(</span><span class="kw">private</span> <span class="var">jwt</span><span class="punc">:</span> <span class="cls">JwtService</span><span class="punc">)</span> <span class="punc">{}</span>
+
+  <span class="kw">async</span> <span class="fn">use</span><span class="punc">(</span><span class="var">req</span><span class="punc">,</span> <span class="var">res</span><span class="punc">,</span> <span class="var">next</span><span class="punc">) {</span>
+    <span class="kw">const</span> <span class="var">token</span> <span class="punc">=</span> <span class="kw">this</span><span class="punc">.</span><span class="fn">extractToken</span><span class="punc">(</span><span class="var">req</span><span class="punc">);</span>
+    <span class="kw">if</span> <span class="punc">(!</span><span class="var">token</span><span class="punc">)</span> <span class="kw">throw new</span> <span class="cls">UnauthorizedException</span><span class="punc">(</span><span class="str">'Missing auth token'</span><span class="punc">);</span>
+
+    <span class="kw">const</span> <span class="var">payload</span> <span class="punc">=</span> <span class="kw">await</span> <span class="kw">this</span><span class="punc">.</span><span class="var">jwt</span><span class="punc">.</span><span class="fn">verifyAsync</span><span class="punc">(</span><span class="var">token</span><span class="punc">, {</span>
+      <span class="prop">algorithms</span><span class="punc">: [</span><span class="str">'RS256'</span><span class="punc">],</span>   <span class="cmt">// RSA-256 signing</span>
+      <span class="prop">issuer</span><span class="punc">:</span> <span class="str">'mps-cybercrime.gov.vn'</span>
+    <span class="punc">});</span>
+
+    <span class="cmt">// 2FA verification nếu action nhạy cảm</span>
+    <span class="kw">if</span> <span class="punc">(</span><span class="var">req</span><span class="punc">.</span><span class="var">headers</span><span class="punc">[</span><span class="str">'x-totp-code'</span><span class="punc">])</span> <span class="punc">{</span>
+      <span class="kw">const</span> <span class="var">valid</span> <span class="punc">=</span> <span class="var">totp</span><span class="punc">.</span><span class="fn">verify</span><span class="punc">({</span>
+        <span class="prop">token</span><span class="punc">:</span> <span class="var">req</span><span class="punc">.</span><span class="var">headers</span><span class="punc">[</span><span class="str">'x-totp-code'</span><span class="punc">],</span>
+        <span class="prop">secret</span><span class="punc">:</span> <span class="var">payload</span><span class="punc">.</span><span class="var">totpSecret</span>
+      <span class="punc">});</span>
+      <span class="kw">if</span> <span class="punc">(!</span><span class="var">valid</span><span class="punc">)</span> <span class="kw">throw new</span> <span class="cls">UnauthorizedException</span><span class="punc">(</span><span class="str">'Invalid 2FA code'</span><span class="punc">);</span>
+    <span class="punc">}</span>
+
+    <span class="var">req</span><span class="punc">.</span><span class="var">user</span> <span class="punc">=</span> <span class="var">payload</span><span class="punc">;</span>
+    <span class="fn">next</span><span class="punc">();</span>
+  <span class="punc">}</span>
+<span class="punc">}</span>
+
+<span class="cmt">// ── roles.guard.ts ── RBAC Guard</span>
+<span class="cls">@Injectable</span><span class="punc">()</span>
+<span class="kw">export class</span> <span class="cls">RolesGuard</span> <span class="punc">{</span>
+  <span class="fn">canActivate</span><span class="punc">(</span><span class="var">ctx</span><span class="punc">:</span> <span class="cls">ExecutionContext</span><span class="punc">):</span> <span class="kw">boolean</span> <span class="punc">{</span>
+    <span class="kw">const</span> <span class="var">required</span> <span class="punc">=</span> <span class="kw">this</span><span class="punc">.</span><span class="var">reflector</span><span class="punc">.</span><span class="fn">get</span><span class="punc">(</span><span class="str">'roles'</span><span class="punc">,</span> <span class="var">ctx</span><span class="punc">.</span><span class="fn">getHandler</span><span class="punc">());</span>
+    <span class="kw">const</span> <span class="punc">{</span> <span class="var">user</span> <span class="punc">}</span> <span class="punc">=</span> <span class="var">ctx</span><span class="punc">.</span><span class="fn">switchToHttp</span><span class="punc">().</span><span class="fn">getRequest</span><span class="punc">();</span>
+    <span class="kw">return</span> <span class="var">required</span><span class="punc">?.</span><span class="fn">includes</span><span class="punc">(</span><span class="var">user</span><span class="punc">.</span><span class="var">role</span><span class="punc">) ?:</span> <span class="kw">true</span><span class="punc">;</span>
+  <span class="punc">}</span>
+<span class="punc">}</span>
+          </div>
+
+          <div class="code-block" id="tab-report">
+<span class="cmt">// ── report.service.ts ── Incident Report với SQL Injection protection</span>
+<span class="cls">@Injectable</span><span class="punc">()</span>
+<span class="kw">export class</span> <span class="cls">ReportService</span> <span class="punc">{</span>
+  <span class="fn">constructor</span><span class="punc">(</span>
+    <span class="cls">@InjectRepository</span><span class="punc">(</span><span class="cls">IncidentReport</span><span class="punc">)</span>
+    <span class="kw">private</span> <span class="var">repo</span><span class="punc">:</span> <span class="cls">Repository</span><span class="punc">&lt;</span><span class="cls">IncidentReport</span><span class="punc">&gt;,</span>
+    <span class="kw">private</span> <span class="var">encryption</span><span class="punc">:</span> <span class="cls">EncryptionService</span><span class="punc">,</span>
+    <span class="kw">private</span> <span class="var">audit</span><span class="punc">:</span> <span class="cls">AuditLogService</span><span class="punc">,</span>
+    <span class="kw">private</span> <span class="var">notify</span><span class="punc">:</span> <span class="cls">NotificationService</span>
+  <span class="punc">) {}</span>
+
+  <span class="kw">async</span> <span class="fn">createReport</span><span class="punc">(</span><span class="var">dto</span><span class="punc">:</span> <span class="cls">CreateReportDto</span><span class="punc">,</span> <span class="var">user</span><span class="punc">:</span> <span class="cls">User</span><span class="punc">) {</span>
+    <span class="cmt">// Sanitize input chống XSS</span>
+    <span class="kw">const</span> <span class="var">clean</span> <span class="punc">=</span> <span class="fn">sanitizeHtml</span><span class="punc">(</span><span class="var">dto</span><span class="punc">.</span><span class="var">description</span><span class="punc">, {</span>
+      <span class="prop">allowedTags</span><span class="punc">: [],</span> <span class="prop">allowedAttributes</span><span class="punc">: {}</span>
+    <span class="punc">});</span>
+
+    <span class="cmt">// Mã hóa dữ liệu nhạy cảm trước khi lưu</span>
+    <span class="kw">const</span> <span class="var">report</span> <span class="punc">=</span> <span class="kw">this</span><span class="punc">.</span><span class="var">repo</span><span class="punc">.</span><span class="fn">create</span><span class="punc">({</span>
+      <span class="prop">userId</span><span class="punc">:</span> <span class="var">user</span><span class="punc">.</span><span class="var">id</span><span class="punc">,</span>
+      <span class="prop">description</span><span class="punc">:</span> <span class="kw">await</span> <span class="kw">this</span><span class="punc">.</span><span class="var">encryption</span><span class="punc">.</span><span class="fn">encrypt</span><span class="punc">(</span><span class="var">clean</span><span class="punc">),</span>
+      <span class="prop">amountLost</span><span class="punc">:</span> <span class="kw">await</span> <span class="kw">this</span><span class="punc">.</span><span class="var">encryption</span><span class="punc">.</span><span class="fn">encrypt</span><span class="punc">(</span><span class="var">dto</span><span class="punc">.</span><span class="var">amountLost</span><span class="punc">.</span><span class="fn">toString</span><span class="punc">()),</span>
+      <span class="prop">reportCode</span><span class="punc">:</span> <span class="fn">generateReportCode</span><span class="punc">(),</span>
+      <span class="punc">...</span><span class="var">dto</span>
+    <span class="punc">});</span>
+
+    <span class="kw">const</span> <span class="var">saved</span> <span class="punc">=</span> <span class="kw">await</span> <span class="kw">this</span><span class="punc">.</span><span class="var">repo</span><span class="punc">.</span><span class="fn">save</span><span class="punc">(</span><span class="var">report</span><span class="punc">);</span>
+
+    <span class="cmt">// Ghi audit log không thể xóa</span>
+    <span class="kw">await</span> <span class="kw">this</span><span class="punc">.</span><span class="var">audit</span><span class="punc">.</span><span class="fn">log</span><span class="punc">({</span>
+      <span class="prop">userId</span><span class="punc">:</span> <span class="var">user</span><span class="punc">.</span><span class="var">id</span><span class="punc">,</span>
+      <span class="prop">action</span><span class="punc">:</span> <span class="str">'CREATE_INCIDENT_REPORT'</span><span class="punc">,</span>
+      <span class="prop">resourceId</span><span class="punc">:</span> <span class="var">saved</span><span class="punc">.</span><span class="var">id</span>
+    <span class="punc">});</span>
+
+    <span class="cmt">// Tự động phân loại và notify điều tra viên</span>
+    <span class="kw">await</span> <span class="kw">this</span><span class="punc">.</span><span class="var">notify</span><span class="punc">.</span><span class="fn">assignToInvestigator</span><span class="punc">(</span><span class="var">saved</span><span class="punc">);</span>
+    <span class="kw">return</span> <span class="var">saved</span><span class="punc">;</span>
+  <span class="punc">}</span>
+<span class="punc">}</span>
+          </div>
+
+          <div class="code-block" id="tab-ratelimit">
+<span class="cmt">// ── rate-limit.guard.ts ── Rate Limiting theo IP + User</span>
+<span class="cls">@Injectable</span><span class="punc">()</span>
+<span class="kw">export class</span> <span class="cls">RateLimitGuard</span> <span class="kw">implements</span> <span class="cls">CanActivate</span> <span class="punc">{</span>
+  <span class="fn">constructor</span><span class="punc">(</span><span class="kw">private</span> <span class="var">redis</span><span class="punc">:</span> <span class="cls">RedisService</span><span class="punc">) {}</span>
+
+  <span class="kw">async</span> <span class="fn">canActivate</span><span class="punc">(</span><span class="var">ctx</span><span class="punc">:</span> <span class="cls">ExecutionContext</span><span class="punc">):</span> <span class="cls">Promise</span><span class="punc">&lt;</span><span class="kw">boolean</span><span class="punc">&gt; {</span>
+    <span class="kw">const</span> <span class="var">req</span> <span class="punc">=</span> <span class="var">ctx</span><span class="punc">.</span><span class="fn">switchToHttp</span><span class="punc">().</span><span class="fn">getRequest</span><span class="punc">();</span>
+    <span class="kw">const</span> <span class="var">ip</span> <span class="punc">=</span> <span class="var">req</span><span class="punc">.</span><span class="var">ip</span><span class="punc">;</span>
+    <span class="kw">const</span> <span class="var">key</span> <span class="punc">=</span> <span class="str">`ratelimit:${</span><span class="var">ip</span><span class="str">}:${</span><span class="fn">getMinuteBucket</span><span class="punc">()</span><span class="str">}`</span><span class="punc">;</span>
+
+    <span class="kw">const</span> <span class="var">current</span> <span class="punc">=</span> <span class="kw">await</span> <span class="kw">this</span><span class="punc">.</span><span class="var">redis</span><span class="punc">.</span><span class="fn">incr</span><span class="punc">(</span><span class="var">key</span><span class="punc">);</span>
+    <span class="kw">if</span> <span class="punc">(</span><span class="var">current</span> <span class="punc">===</span> <span class="num">1</span><span class="punc">)</span> <span class="kw">await</span> <span class="kw">this</span><span class="punc">.</span><span class="var">redis</span><span class="punc">.</span><span class="fn">expire</span><span class="punc">(</span><span class="var">key</span><span class="punc">,</span> <span class="num">60</span><span class="punc">);</span>
+
+    <span class="cmt">// Giới hạn: 100 req/phút cho public, 500 cho authenticated</span>
+    <span class="kw">const</span> <span class="var">limit</span> <span class="punc">=</span> <span class="var">req</span><span class="punc">.</span><span class="var">user</span> <span class="punc">?</span> <span class="num">500</span> <span class="punc">:</span> <span class="num">100</span><span class="punc">;</span>
+
+    <span class="kw">if</span> <span class="punc">(</span><span class="var">current</span> <span class="punc">&gt;</span> <span class="var">limit</span><span class="punc">) {</span>
+      <span class="cmt">// Auto-blacklist IP nếu vượt 10x ngưỡng</span>
+      <span class="kw">if</span> <span class="punc">(</span><span class="var">current</span> <span class="punc">&gt;</span> <span class="var">limit</span> <span class="punc">*</span> <span class="num">10</span><span class="punc">)</span> <span class="kw">await</span> <span class="kw">this</span><span class="punc">.</span><span class="fn">blacklistIp</span><span class="punc">(</span><span class="var">ip</span><span class="punc">);</span>
+      <span class="kw">throw new</span> <span class="cls">TooManyRequestsException</span><span class="punc">();</span>
+    <span class="punc">}</span>
+
+    <span class="kw">return</span> <span class="kw">true</span><span class="punc">;</span>
+  <span class="punc">}</span>
+
+  <span class="kw">private async</span> <span class="fn">blacklistIp</span><span class="punc">(</span><span class="var">ip</span><span class="punc">:</span> <span class="kw">string</span><span class="punc">) {</span>
+    <span class="kw">await</span> <span class="kw">this</span><span class="punc">.</span><span class="var">redis</span><span class="punc">.</span><span class="fn">setex</span><span class="punc">(</span><span class="str">`blacklist:${</span><span class="var">ip</span><span class="str">}`</span><span class="punc">,</span> <span class="num">86400</span><span class="punc">,</span> <span class="str">'1'</span><span class="punc">);</span>
+    <span class="cmt">// Ghi SIEM alert</span>
+    <span class="kw">this</span><span class="punc">.</span><span class="fn">emitSecurityEvent</span><span class="punc">({</span> <span class="prop">type</span><span class="punc">:</span> <span class="str">'IP_BLACKLISTED'</span><span class="punc">,</span> <span class="var">ip</span> <span class="punc">});</span>
+  <span class="punc">}</span>
+<span class="punc">}</span>
+          </div>
+
+          <div class="code-block" id="tab-encrypt">
+<span class="cmt">// ── encryption.service.ts ── AES-256-GCM Encryption</span>
+<span class="kw">import</span> <span class="punc">{</span> <span class="var">createCipheriv</span><span class="punc">,</span> <span class="var">randomBytes</span><span class="punc">,</span> <span class="var">createDecipheriv</span> <span class="punc">}</span> <span class="kw">from</span> <span class="str">'crypto'</span><span class="punc">;</span>
+
+<span class="cls">@Injectable</span><span class="punc">()</span>
+<span class="kw">export class</span> <span class="cls">EncryptionService</span> <span class="punc">{</span>
+  <span class="kw">private readonly</span> <span class="var">ALGORITHM</span> <span class="punc">=</span> <span class="str">'aes-256-gcm'</span><span class="punc">;</span>
+  <span class="kw">private readonly</span> <span class="var">KEY</span><span class="punc">:</span> <span class="cls">Buffer</span><span class="punc">;</span>
+
+  <span class="fn">constructor</span><span class="punc">() {</span>
+    <span class="cmt">// Key lấy từ HashiCorp Vault, không hardcode</span>
+    <span class="kw">this</span><span class="punc">.</span><span class="var">KEY</span> <span class="punc">=</span> <span class="cls">Buffer</span><span class="punc">.</span><span class="fn">from</span><span class="punc">(</span><span class="var">process</span><span class="punc">.</span><span class="var">env</span><span class="punc">.</span><span class="var">ENCRYPTION_KEY</span><span class="punc">,</span> <span class="str">'hex'</span><span class="punc">);</span>
+  <span class="punc">}</span>
+
+  <span class="fn">encrypt</span><span class="punc">(</span><span class="var">plaintext</span><span class="punc">:</span> <span class="kw">string</span><span class="punc">):</span> <span class="kw">string</span> <span class="punc">{</span>
+    <span class="kw">const</span> <span class="var">iv</span> <span class="punc">=</span> <span class="fn">randomBytes</span><span class="punc">(</span><span class="num">12</span><span class="punc">);</span> <span class="cmt">// 96-bit IV cho GCM</span>
+    <span class="kw">const</span> <span class="var">cipher</span> <span class="punc">=</span> <span class="fn">createCipheriv</span><span class="punc">(</span><span class="kw">this</span><span class="punc">.</span><span class="var">ALGORITHM</span><span class="punc">,</span> <span class="kw">this</span><span class="punc">.</span><span class="var">KEY</span><span class="punc">,</span> <span class="var">iv</span><span class="punc">);</span>
+    <span class="kw">const</span> <span class="var">encrypted</span> <span class="punc">=</span> <span class="cls">Buffer</span><span class="punc">.</span><span class="fn">concat</span><span class="punc">([</span>
+      <span class="var">cipher</span><span class="punc">.</span><span class="fn">update</span><span class="punc">(</span><span class="var">plaintext</span><span class="punc">,</span> <span class="str">'utf8'</span><span class="punc">),</span>
+      <span class="var">cipher</span><span class="punc">.</span><span class="fn">final</span><span class="punc">()</span>
+    <span class="punc">]);</span>
+    <span class="kw">const</span> <span class="var">authTag</span> <span class="punc">=</span> <span class="var">cipher</span><span class="punc">.</span><span class="fn">getAuthTag</span><span class="punc">();</span> <span class="cmt">// GCM Auth Tag chống tamper</span>
+
+    <span class="cmt">// Format: iv:authTag:ciphertext (base64)</span>
+    <span class="kw">return</span> <span class="punc">[</span>
+      <span class="var">iv</span><span class="punc">.</span><span class="fn">toString</span><span class="punc">(</span><span class="str">'base64'</span><span class="punc">),</span>
+      <span class="var">authTag</span><span class="punc">.</span><span class="fn">toString</span><span class="punc">(</span><span class="str">'base64'</span><span class="punc">),</span>
+      <span class="var">encrypted</span><span class="punc">.</span><span class="fn">toString</span><span class="punc">(</span><span class="str">'base64'</span><span class="punc">)</span>
+    <span class="punc">].</span><span class="fn">join</span><span class="punc">(</span><span class="str">':'</span><span class="punc">);</span>
+  <span class="punc">}</span>
+
+  <span class="fn">decrypt</span><span class="punc">(</span><span class="var">ciphertext</span><span class="punc">:</span> <span class="kw">string</span><span class="punc">):</span> <span class="kw">string</span> <span class="punc">{</span>
+    <span class="kw">const</span> <span class="punc">[</span><span class="var">ivB64</span><span class="punc">,</span> <span class="var">tagB64</span><span class="punc">,</span> <span class="var">dataB64</span><span class="punc">] =</span> <span class="var">ciphertext</span><span class="punc">.</span><span class="fn">split</span><span class="punc">(</span><span class="str">':'</span><span class="punc">);</span>
+    <span class="kw">const</span> <span class="var">decipher</span> <span class="punc">=</span> <span class="fn">createDecipheriv</span><span class="punc">(</span>
+      <span class="kw">this</span><span class="punc">.</span><span class="var">ALGORITHM</span><span class="punc">,</span> <span class="kw">this</span><span class="punc">.</span><span class="var">KEY</span><span class="punc">,</span>
+      <span class="cls">Buffer</span><span class="punc">.</span><span class="fn">from</span><span class="punc">(</span><span class="var">ivB64</span><span class="punc">,</span> <span class="str">'base64'</span><span class="punc">)</span>
+    <span class="punc">);</span>
+    <span class="var">decipher</span><span class="punc">.</span><span class="fn">setAuthTag</span><span class="punc">(</span><span class="cls">Buffer</span><span class="punc">.</span><span class="fn">from</span><span class="punc">(</span><span class="var">tagB64</span><span class="punc">,</span> <span class="str">'base64'</span><span class="punc">));</span>
+    <span class="kw">return</span> <span class="cls">Buffer</span><span class="punc">.</span><span class="fn">concat</span><span class="punc">([</span>
+      <span class="var">decipher</span><span class="punc">.</span><span class="fn">update</span><span class="punc">(</span><span class="cls">Buffer</span><span class="punc">.</span><span class="fn">from</span><span class="punc">(</span><span class="var">dataB64</span><span class="punc">,</span> <span class="str">'base64'</span><span class="punc">)),</span>
+      <span class="var">decipher</span><span class="punc">.</span><span class="fn">final</span><span class="punc">()</span>
+    <span class="punc">]).</span><span class="fn">toString</span><span class="punc">(</span><span class="str">'utf8'</span><span class="punc">);</span>
+  <span class="punc">}</span>
+<span class="punc">}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- DEPLOYMENT GUIDE -->
+      <div style="margin-top: 40px;" class="reveal">
+        <h3 style="font-family: 'Rajdhani', sans-serif; font-size: 22px; font-weight: 700; margin-bottom: 24px; color: var(--text-primary);">🚀 Hướng Dẫn Triển Khai Production</h3>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+          <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 24px;">
+            <h4 style="font-family: 'Rajdhani', sans-serif; font-size: 17px; font-weight: 700; color: var(--accent-cyan); margin-bottom: 16px;">🐳 Docker Compose Stack</h4>
+            <div style="background: #020810; border-radius: 8px; padding: 16px; font-family: monospace; font-size: 12px; line-height: 1.8; color: #9cdcfe;">
+              <div style="color: #6a9955;"># docker-compose.prod.yml</div>
+              <div style="color: #dcdcaa;">services:</div>
+              <div>&nbsp;&nbsp;<span style="color:#92c9ef;">api-gateway</span>: <span style="color:#ce9178;">nginx:alpine</span></div>
+              <div>&nbsp;&nbsp;<span style="color:#92c9ef;">auth-service</span>: <span style="color:#ce9178;">node:20-alpine</span></div>
+              <div>&nbsp;&nbsp;<span style="color:#92c9ef;">report-service</span>: <span style="color:#ce9178;">node:20-alpine</span></div>
+              <div>&nbsp;&nbsp;<span style="color:#92c9ef;">alert-service</span>: <span style="color:#ce9178;">node:20-alpine</span></div>
+              <div>&nbsp;&nbsp;<span style="color:#92c9ef;">postgres</span>: <span style="color:#ce9178;">postgres:16-alpine</span></div>
+              <div>&nbsp;&nbsp;<span style="color:#92c9ef;">redis</span>: <span style="color:#ce9178;">redis:7-alpine</span></div>
+              <div>&nbsp;&nbsp;<span style="color:#92c9ef;">elasticsearch</span>: <span style="color:#ce9178;">8.11.0</span></div>
+              <div>&nbsp;&nbsp;<span style="color:#92c9ef;">prometheus</span>: <span style="color:#ce9178;">latest</span></div>
+              <div>&nbsp;&nbsp;<span style="color:#92c9ef;">grafana</span>: <span style="color:#ce9178;">latest</span></div>
+              <div>&nbsp;&nbsp;<span style="color:#92c9ef;">vault</span>: <span style="color:#ce9178;">hashicorp/vault</span></div>
+            </div>
+          </div>
+          <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 24px;">
+            <h4 style="font-family: 'Rajdhani', sans-serif; font-size: 17px; font-weight: 700; color: var(--accent-green); margin-bottom: 16px;">♻️ Backup &amp; Disaster Recovery</h4>
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+              <div style="display: flex; gap: 10px; align-items: flex-start;">
+                <div style="width: 8px; height: 8px; border-radius: 50%; background: var(--accent-green); margin-top: 5px; flex-shrink: 0;"></div>
+                <div>
+                  <div style="font-size: 13px; font-weight: 600; color: var(--text-primary);">Backup realtime (WAL Streaming)</div>
+                  <div style="font-size: 12px; color: var(--text-secondary);">PostgreSQL WAL → Object Storage (S3) liên tục</div>
+                </div>
+              </div>
+              <div style="display: flex; gap: 10px; align-items: flex-start;">
+                <div style="width: 8px; height: 8px; border-radius: 50%; background: var(--accent-cyan); margin-top: 5px; flex-shrink: 0;"></div>
+                <div>
+                  <div style="font-size: 13px; font-weight: 600; color: var(--text-primary);">Full Backup mỗi 6 giờ</div>
+                  <div style="font-size: 12px; color: var(--text-secondary);">pg_dump mã hóa AES-256, lưu 3 datacenter khác nhau</div>
+                </div>
+              </div>
+              <div style="display: flex; gap: 10px; align-items: flex-start;">
+                <div style="width: 8px; height: 8px; border-radius: 50%; background: var(--accent-gold); margin-top: 5px; flex-shrink: 0;"></div>
+                <div>
+                  <div style="font-size: 13px; font-weight: 600; color: var(--text-primary);">RTO &lt; 15 phút | RPO &lt; 5 phút</div>
+                  <div style="font-size: 12px; color: var(--text-secondary);">Khôi phục hoàn toàn trong vòng 15 phút, tối đa mất 5 phút dữ liệu</div>
+                </div>
+              </div>
+              <div style="display: flex; gap: 10px; align-items: flex-start;">
+                <div style="width: 8px; height: 8px; border-radius: 50%; background: var(--accent-red); margin-top: 5px; flex-shrink: 0;"></div>
+                <div>
+                  <div style="font-size: 13px; font-weight: 600; color: var(--text-primary);">Emergency Kill Switch</div>
+                  <div style="font-size: 12px; color: var(--text-secondary);">Ngắt ngay tất cả kết nối bên ngoài khi phát hiện tấn công APT</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- KIẾN THỨC -->
+  <section id="kien-thuc" style="padding: 64px 0;">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-label">Module 05</div>
+        <div class="section-title">Trung Tâm Kiến Thức</div>
+        <p class="section-desc">Nâng cao nhận thức cộng đồng về an toàn thông tin và phòng chống tội phạm mạng.</p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px;" class="reveal">
+        <div>
+          <h3 style="font-family: 'Rajdhani', sans-serif; font-size: 20px; font-weight: 700; margin-bottom: 20px; color: var(--text-primary);">❓ Câu Hỏi Thường Gặp</h3>
+
+          <div class="faq-item">
+            <div class="faq-q" onclick="toggleFaq(this)">
+              Làm sao biết mình đang bị lừa đảo qua điện thoại?
+              <span class="arrow">▼</span>
+            </div>
+            <div class="faq-a">Các dấu hiệu điển hình: người gọi tự xưng là công an/viện kiểm sát yêu cầu chuyển tiền vào "tài khoản bảo lãnh"; áp lực thời gian, yêu cầu giữ bí mật; yêu cầu cung cấp OTP, PIN tài khoản ngân hàng; không cho phép trao đổi với người thân. Cơ quan Nhà nước KHÔNG BAO GIỜ yêu cầu chuyển tiền qua điện thoại.</div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-q" onclick="toggleFaq(this)">
+              Sau khi nộp báo cáo, bao lâu được phản hồi?
+              <span class="arrow">▼</span>
+            </div>
+            <div class="faq-a">Báo cáo sự cố khẩn cấp được xử lý trong vòng 15 phút. Báo cáo thông thường được gán điều tra viên trong vòng 2 giờ. Bạn sẽ nhận được mã báo cáo để theo dõi tiến độ qua cổng hoặc SMS. Thời gian điều tra đầy đủ phụ thuộc vào mức độ phức tạp, thường từ 3-30 ngày.</div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-q" onclick="toggleFaq(this)">
+              Dữ liệu của tôi có được bảo mật không?
+              <span class="arrow">▼</span>
+            </div>
+            <div class="faq-a">Toàn bộ dữ liệu được mã hóa AES-256-GCM trong cơ sở dữ liệu. Thông tin cá nhân (họ tên, SĐT, email) được mã hóa ở cấp độ trường dữ liệu. Chỉ điều tra viên có thẩm quyền mới xem được thông tin đầy đủ. Mọi truy cập đều được ghi audit log không thể xóa.</div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-q" onclick="toggleFaq(this)">
+              Tôi có thể báo cáo ẩn danh không?
+              <span class="arrow">▼</span>
+            </div>
+            <div class="faq-a">Có, hệ thống hỗ trợ báo cáo ẩn danh cho một số loại sự cố. Tuy nhiên, báo cáo có thông tin liên hệ sẽ giúp điều tra viên liên hệ lấy thêm bằng chứng và tăng tỷ lệ thành công trong truy tố. Thông tin của bạn được bảo vệ theo Luật An toàn thông tin mạng.</div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-q" onclick="toggleFaq(this)">
+              Website lừa đảo được xử lý như thế nào?
+              <span class="arrow">▼</span>
+            </div>
+            <div class="faq-a">Sau khi xác minh, VNPT/Viettel và các nhà cung cấp DNS trong nước được thông báo để chặn truy cập. Đồng thời phối hợp với ICANN và hosting provider quốc tế để takedown domain/server. Thời gian trung bình để chặn 1 website lừa đảo là 4-8 giờ.</div>
+          </div>
+        </div>
+
+        <div>
+          <h3 style="font-family: 'Rajdhani', sans-serif; font-size: 20px; font-weight: 700; margin-bottom: 20px; color: var(--text-primary);">🎬 Video Hướng Dẫn</h3>
+          <div style="display: flex; flex-direction: column; gap: 14px;">
+            <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 16px; display: flex; gap: 16px; align-items: center; cursor: pointer; transition: all 0.25s;" onmouseover="this.style.borderColor='var(--border-hover)'" onmouseout="this.style.borderColor='var(--border)'">
+              <div style="width: 56px; height: 42px; background: rgba(230,57,70,0.12); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0;">▶️</div>
+              <div>
+                <div style="font-size: 14px; font-weight: 600; color: var(--text-primary);">Nhận diện 10 chiêu lừa đảo phổ biến 2026</div>
+                <div style="font-size: 12px; color: var(--text-muted); margin-top: 3px;">12:34 phút · 1.2M lượt xem</div>
+              </div>
+            </div>
+            <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 16px; display: flex; gap: 16px; align-items: center; cursor: pointer; transition: all 0.25s;" onmouseover="this.style.borderColor='var(--border-hover)'" onmouseout="this.style.borderColor='var(--border)'">
+              <div style="width: 56px; height: 42px; background: rgba(0,245,255,0.08); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0;">▶️</div>
+              <div>
+                <div style="font-size: 14px; font-weight: 600; color: var(--text-primary);">Cách đặt mật khẩu an toàn và xác thực 2 bước</div>
+                <div style="font-size: 12px; color: var(--text-muted); margin-top: 3px;">8:17 phút · 890K lượt xem</div>
+              </div>
+            </div>
+            <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 16px; display: flex; gap: 16px; align-items: center; cursor: pointer; transition: all 0.25s;" onmouseover="this.style.borderColor='var(--border-hover)'" onmouseout="this.style.borderColor='var(--border)'">
+              <div style="width: 56px; height: 42px; background: rgba(255,214,10,0.08); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0;">▶️</div>
+              <div>
+                <div style="font-size: 14px; font-weight: 600; color: var(--text-primary);">Xử lý khẩn cấp khi bị hack tài khoản ngân hàng</div>
+                <div style="font-size: 12px; color: var(--text-muted); margin-top: 3px;">15:02 phút · 2.4M lượt xem</div>
+              </div>
+            </div>
+            <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 16px; display: flex; gap: 16px; align-items: center; cursor: pointer; transition: all 0.25s;" onmouseover="this.style.borderColor='var(--border-hover)'" onmouseout="this.style.borderColor='var(--border)'">
+              <div style="width: 56px; height: 42px; background: rgba(6,214,160,0.08); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0;">▶️</div>
+              <div>
+                <div style="font-size: 14px; font-weight: 600; color: var(--text-primary);">Deepfake AI: Nhận biết và phòng tránh</div>
+                <div style="font-size: 12px; color: var(--text-muted); margin-top: 3px;">10:45 phút · 750K lượt xem</div>
+              </div>
+            </div>
+          </div>
+
+          <div style="background: linear-gradient(135deg, rgba(0,245,255,0.05), rgba(6,214,160,0.05)); border: 1px solid rgba(0,245,255,0.15); border-radius: 14px; padding: 20px; margin-top: 16px;">
+            <h4 style="font-family: 'Rajdhani', sans-serif; font-size: 17px; font-weight: 700; color: var(--accent-cyan); margin-bottom: 12px;">🎯 Mô Phỏng Tình Huống Lừa Đảo</h4>
+            <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px; line-height: 1.65;">Trải nghiệm các kịch bản lừa đảo thực tế trong môi trường an toàn. Học cách nhận diện và xử lý trước khi gặp phải trong thực tế.</p>
+            <button class="btn-primary" style="font-size: 13px; padding: 10px 20px;">🎮 Bắt đầu mô phỏng</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px;">
+          <div class="nav-logo">CA</div>
+          <div>
+            <div style="font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 14px; color: var(--text-primary);">CỔNG THÔNG TIN AN NINH MẠNG</div>
+            <div style="font-size: 11px; color: var(--text-muted);">Cục An ninh mạng và Phòng chống tội phạm công nghệ cao</div>
+          </div>
+        </div>
+        <p>Hệ thống Cổng thông tin phòng chống tội phạm mạng quốc gia, phục vụ 100 triệu người dân Việt Nam, hoạt động 24/7.</p>
+        <div style="margin-top: 16px;">
+          <div class="footer-hotline">📞 ĐƯỜNG DÂY HỖ TRỢ</div>
+          <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">Miễn phí · 24/7</div>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Chức năng</h4>
+        <ul>
+          <li><a href="#canh-bao">Cảnh báo lừa đảo</a></li>
+          <li><a href="#khẩn-cap">Xử lý khẩn cấp</a></li>
+          <li><a href="#bao-cao">Báo cáo sự cố</a></li>
+          <li><a href="#ban-do">Bản đồ an ninh</a></li>
+          <li><a href="#kien-thuc">Trung tâm kiến thức</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Tài liệu kỹ thuật</h4>
+        <ul>
+          <li><a href="#kien-truc">Kiến trúc hệ thống</a></li>
+          <li><a href="#kien-truc">Database Schema</a></li>
+          <li><a href="#kien-truc">API Documentation</a></li>
+          <li><a href="#kien-truc">Bảo mật &amp; Mã hóa</a></li>
+          <li><a href="#kien-truc">Hướng dẫn triển khai</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Liên kết nhanh</h4>
+        <ul>
+          <li><a href="#">VNCERT/CC</a></li>
+          <li><a href="#">Cục An ninh mạng</a></li>
+          <li><a href="#">Chính sách bảo mật</a></li>
+          <li><a href="#">Điều khoản sử dụng</a></li>
+          <li><a href="#">Phản ánh &amp; Góp ý</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2026 Cổng Thông Tin Phòng Chống Tội Phạm Mạng Quốc Gia — Cục An ninh mạng và Phòng chống tội phạm công nghệ cao</div>
+      <div style="display: flex; gap: 12px;">
+        <div class="sec-badge" style="font-size: 11px; padding: 4px 10px;"><div class="dot dot-green"></div>Bảo mật ISO 27001</div>
+        <div class="sec-badge" style="font-size: 11px; padding: 4px 10px;"><div class="dot dot-cyan"></div>TLS 1.3</div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- FLOATING BUTTONS -->
+<div class="hotline-float">
+  <button class="hotline-btn">📞 Đường Dây Khẩn Cấp</button>
+  <button class="chat-btn">💬 Hỗ trợ trực tiếp</button>
+</div>
+
+<script>
+  // ── THEME TOGGLE ──
+  function toggleTheme() {
+    const html = document.documentElement;
+    const btn = document.getElementById('themeBtn');
+    if (html.dataset.theme === 'dark') {
+      html.dataset.theme = 'light';
+      btn.textContent = '🌙';
+    } else {
+      html.dataset.theme = 'dark';
+      btn.textContent = '☀️';
+    }
+  }
+
+  // ── COUNTER ANIMATION ──
+  function animateCounter(el, target, suffix = '') {
+    let current = 0;
+    const step = target / 60;
+    const timer = setInterval(() => {
+      current = Math.min(current + step, target);
+      el.textContent = Math.floor(current).toLocaleString('vi-VN') + suffix;
+      if (current >= target) clearInterval(timer);
+    }, 25);
+  }
+
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      animateCounter(document.getElementById('counter1'), 347);
+      animateCounter(document.getElementById('counter2'), 2841);
+      animateCounter(document.getElementById('counter3'), 158000, '+');
+    }, 800);
+  });
+
+  // ── SCROLL REVEAL ──
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // ── SEARCH ──
+  function doSearch() {
+    const query = document.getElementById('searchInput').value.trim();
+    const result = document.getElementById('searchResult');
+    if (!query) return;
+
+    result.style.display = 'block';
+    const isPhone = /^0[0-9]{9}$/.test(query.replace(/\s/g,''));
+    const isDomain = query.includes('.') && !query.includes('@');
+    const isBankAcc = /^[0-9]{8,20}$/.test(query);
+
+    let html = '';
+    const fraudNumbers = ['0909111222', '0912345678', '0888999000'];
+    const fraudDomains = ['invest-vn.com', 'luadao.vn', 'ngan-hang-techcom.xyz'];
+
+    if (fraudNumbers.some(n => query.includes(n.slice(-6))) || fraudDomains.some(d => query.includes(d))) {
+      html = `<div style="background: rgba(230,57,70,0.1); border: 1px solid rgba(230,57,70,0.3); border-radius: 10px; padding: 16px; display: flex; gap: 12px; align-items: center;">
+        <div style="font-size: 24px;">🚨</div>
+        <div>
+          <div style="font-weight: 700; color: var(--accent-red); font-size: 15px;">⚠️ CẢNH BÁO: ĐÃ CÓ TRONG DANH SÁCH LỪAẢO</div>
+          <div style="font-size: 13px; color: var(--text-secondary); margin-top: 4px;">Đã nhận được <strong style="color: var(--accent-red);">47 báo cáo</strong> về đối tượng này. Phân loại: <strong>Lừa đảo tài chính</strong>. Vui lòng không giao dịch và báo cáo nếu đã bị thiệt hại.</div>
+        </div>
+      </div>`;
+    } else {
+      html = `<div style="background: rgba(6,214,160,0.08); border: 1px solid rgba(6,214,160,0.25); border-radius: 10px; padding: 16px; display: flex; gap: 12px; align-items: center;">
+        <div style="font-size: 24px;">✅</div>
+        <div>
+          <div style="font-weight: 700; color: var(--accent-green); font-size: 15px;">Không tìm thấy trong cơ sở dữ liệu lừa đảo</div>
+          <div style="font-size: 13px; color: var(--text-secondary); margin-top: 4px;">Tuy nhiên, hãy luôn cảnh giác. Nếu bạn nghi ngờ đối tượng này lừa đảo, hãy <a href="#bao-cao" style="color: var(--accent-cyan);">báo cáo ngay</a> để bảo vệ cộng đồng.</div>
+        </div>
+      </div>`;
+    }
+    result.innerHTML = html;
+  }
+
+  document.getElementById('searchInput').addEventListener('keyup', (e) => {
+    if (e.key === 'Enter') doSearch();
+  });
+
+  // ── URGENCY BUTTONS ──
+  function setUrgency(btn, cls) {
+    document.querySelectorAll('.urgency-btn').forEach(b => b.className = 'urgency-btn');
+    btn.classList.add(cls);
+  }
+
+  // ── UPLOAD ──
+  function triggerUpload() { document.getElementById('fileInput').click(); }
+  document.getElementById('fileInput').addEventListener('change', function() {
+    if (this.files.length) {
+      const zone = this.closest ? document.querySelector('.upload-zone') : this.parentElement;
+      zone.querySelector('strong').textContent = `✓ Đã chọn ${this.files.length} file`;
+      zone.style.borderColor = 'var(--accent-green)';
+    }
+  });
+
+  // ── SUBMIT REPORT ──
+  function submitReport() {
+    showToast('📋 Báo cáo đã được nộp thành công! Mã: BC2026-' + Math.floor(Math.random()*90000+10000) + '. Điều tra viên sẽ liên hệ trong 15 phút.', 'success');
+  }
+
+  // ── FAQ TOGGLE ──
+  function toggleFaq(header) {
+    const item = header.parentElement;
+    item.classList.toggle('open');
+  }
+
+  // ── CODE TABS ──
+  function showTab(id) {
+    document.querySelectorAll('.code-block').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.code-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    event.target.classList.add('active');
+  }
+
+  // ── TOAST ──
+  function showToast(msg, type) {
+    const t = document.getElementById('toast');
+    t.querySelector('.toast-content p').textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 5000);
+  }
+
+  function showEmergency() {
+    alert('🚨 ĐƯỜNG DÂY KHẨN CẤP\n\nVui lòng liên hệ cơ quan chức năng hoặc trung tâm ứng cứu sự cố an toàn mạng quốc gia.\n\nBạn cũng có thể báo cáo trực tuyến tại #bao-cao');
+  }
+
+  // Show toast after 3 seconds
+  setTimeout(() => showToast('Phát hiện 3 website lừa đảo mới trong 1 giờ qua', 'warning'), 3000);
+</script>
+</body>
+</html>
